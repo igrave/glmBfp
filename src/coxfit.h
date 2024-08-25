@@ -133,7 +133,7 @@ public:
            const AVector& offsets,
            const int method,
            double eps = 1e-09,
-           double tolerChol = pow(DOUBLE_EPS, 0.75),
+           double tolerChol = pow(DBL_EPSILON, 0.75),
            int iterMax = 40,
            double tolerInf = 1e-05) :
                survTimes(survTimes),

@@ -15,7 +15,7 @@
 
 static const double THRESH = 30.;
 static const double MTHRESH = -30.;
-static const double INVEPS = 1 / DOUBLE_EPS;
+static const double INVEPS = 1 / DBL_EPSILON;
 
 
 // ***************************************************************************************************//
@@ -85,7 +85,7 @@ public:
     double
     linkinv(double eta) const
     {
-        double tmp = (eta < MTHRESH) ? DOUBLE_EPS :
+        double tmp = (eta < MTHRESH) ? DBL_EPSILON :
                      ((eta > THRESH) ? INVEPS : exp(eta));
         return x_d_opx(tmp);
     }
@@ -95,7 +95,7 @@ public:
     mu_eta(double eta) const
     {
         double opexp = 1 + exp(eta);
-        double ret = (eta > THRESH || eta < MTHRESH) ? DOUBLE_EPS :
+        double ret = (eta > THRESH || eta < MTHRESH) ? DBL_EPSILON :
                       exp(eta) / (opexp * opexp);
         return ret;
     }
@@ -110,7 +110,7 @@ class CauchitLink : public Link
 public:
     // ctr
     CauchitLink() :
-        thresh(- Rf_qcauchy(DOUBLE_EPS, 0.0, 1.0, 1, 0))
+        thresh(- Rf_qcauchy(DBL_EPSILON, 0.0, 1.0, 1, 0))
         {
         }
 
@@ -134,7 +134,7 @@ public:
     double
     mu_eta(double eta) const
     {
-        return fmax(Rf_dcauchy(eta, 0.0, 1.0, 0), DOUBLE_EPS);
+        return fmax(Rf_dcauchy(eta, 0.0, 1.0, 0), DBL_EPSILON);
     }
 
 private:
@@ -149,7 +149,7 @@ class ProbitLink : public Link
 public:
     // ctr
     ProbitLink() :
-        thresh(- Rf_qnorm5(DOUBLE_EPS, 0.0, 1.0, 1, 0))
+        thresh(- Rf_qnorm5(DBL_EPSILON, 0.0, 1.0, 1, 0))
         {
         }
 
@@ -173,7 +173,7 @@ public:
     double
     mu_eta(double eta) const
     {
-        return fmax(Rf_dnorm4(eta, 0.0, 1.0, 0), DOUBLE_EPS);
+        return fmax(Rf_dnorm4(eta, 0.0, 1.0, 0), DBL_EPSILON);
     }
 
 private:
@@ -197,7 +197,7 @@ public:
     double
     linkinv(double eta) const
     {
-        return fmax(fmin(- expm1(- exp(eta)), 1 - DOUBLE_EPS), DOUBLE_EPS);
+        return fmax(fmin(- expm1(- exp(eta)), 1 - DBL_EPSILON), DBL_EPSILON);
     }
 
     // compare in R: binomial("cloglog")$mu.eta
@@ -205,7 +205,7 @@ public:
     mu_eta(double eta) const
     {
         eta = fmin(eta, 700.0);
-        return fmax(exp(eta) * exp(- exp(eta)), DOUBLE_EPS);
+        return fmax(exp(eta) * exp(- exp(eta)), DBL_EPSILON);
     }
 };
 
@@ -254,14 +254,14 @@ public:
     double
     linkinv(double eta) const
     {
-        return fmax(exp(eta), DOUBLE_EPS);
+        return fmax(exp(eta), DBL_EPSILON);
     }
 
     // finally the response derivative is also exp
     double
     mu_eta(double eta) const
     {
-        return fmax(exp(eta), DOUBLE_EPS);
+        return fmax(exp(eta), DBL_EPSILON);
     }
 };
 

@@ -6,6 +6,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // cpp_bfgs
 SEXP cpp_bfgs(SEXP r_startval, SEXP r_function, SEXP r_minx, SEXP r_maxx, SEXP r_precision, SEXP r_verbose);
 RcppExport SEXP _glmBfp_cpp_bfgs(SEXP r_startvalSEXP, SEXP r_functionSEXP, SEXP r_minxSEXP, SEXP r_maxxSEXP, SEXP r_precisionSEXP, SEXP r_verboseSEXP) {
