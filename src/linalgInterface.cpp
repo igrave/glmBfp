@@ -5,15 +5,22 @@
  *      Author: daniel
  */
 
+#ifndef  USE_FC_LEN_T
+# define USE_FC_LEN_T
+#endif
 
 #include <cassert>
 #define ARMA_BLAS_CAPITALS
 #define ARMA_LAPACK_CAPITALS
 #include <linalgInterface.h>
 
+#include <Rconfig.h>
 #include <R_ext/Lapack.h>
 #include <R_ext/BLAS.h>
 
+#ifndef FCONE
+# define FCONE
+#endif
 
 // constants:
 static const double doubleOne = 1.0;
@@ -49,7 +56,7 @@ trs(const bool upper,
                     L.memptr(),
                     & m,
                     R.memptr(),
-                    & m);
+                    & m FCONE FCONE FCONE FCONE);
 }
 
 // Cholesky decomposition of (symmetric) A,
@@ -69,7 +76,7 @@ potrf(const bool upper,
                      & n,
                      A.memptr(),
                      & n,
-                     & info);
+                     & info FCONE);
 
     return info;
 }
@@ -97,7 +104,7 @@ potrs(const bool upper,
                      & n,
                      R.memptr(),
                      & n,
-                     & info);
+                     & info FCONE);
 
     return info;
 }
@@ -130,7 +137,7 @@ syrk(const bool upper,
                     & lda,
                     & beta,
                     C.memptr(),
-                    & n);
+                    & n FCONE FCONE);
 }
 
 // Do a triangular matrix-vector multiplication:
@@ -155,7 +162,7 @@ trmv(const bool upper,
                     A.memptr(),
                     & n,
                     x.memptr(),
-                    & intOne);
+                    & intOne FCONE FCONE FCONE);
 }
 
 
