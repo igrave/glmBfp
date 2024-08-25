@@ -50,7 +50,7 @@ typedef std::vector<Int> IntVector;
 // and an unsigned int vector
 typedef std::vector<PosInt> PosIntVector;
 // the machine precision
-static const double EPS = sqrt(DOUBLE_EPS);
+static const double EPS = sqrt(DBL_EPSILON);
 
 
 // Armadillo types ************************************

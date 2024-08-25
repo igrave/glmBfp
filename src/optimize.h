@@ -109,7 +109,7 @@ template<class Fun>
         double t2, fu, fv, fw, fx, xm, eps, tol1, tol3;
 
         /*  eps is approximately the square root of the relative machine precision. */
-        eps = DOUBLE_EPS;
+        eps = DBL_EPSILON;
         tol1 = eps + 1.0; /* the smallest 1.000... > 1 */
         eps = sqrt(eps);
 
