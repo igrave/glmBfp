@@ -452,6 +452,10 @@ coxTBF <- function(formula, data, type="MAP", baseline='shrunk', globalEB=FALSE,
     #Do the original shortcut way, using E(beta) in the exp.
     if(sep==FALSE){
        model.coefs <- getModelCoefs(model.listpart, sep=FALSE)
+       model.formula <- reformulate(
+         setdiff(colnames(new.data), c(time.var, status.var)),
+         response = paste("survival::Surv(",time.var,",",status.var,")")
+       )
        model.cph <- rms::cph(formula(model.formula), data=new.data, surv=TRUE, se.fit = FALSE, y=TRUE, x=TRUE)
     
        ret <- list()
@@ -488,6 +492,10 @@ coxTBF <- function(formula, data, type="MAP", baseline='shrunk', globalEB=FALSE,
     #Do the full way with E(h_i(t)exp(beta))
     if(sep==TRUE){
       model.coefs <- getModelCoefs(model.listpart, sep=TRUE)
+      model.formula <- reformulate(
+        setdiff(colnames(new.data), c(time.var, status.var)),
+        response = paste("survival::Surv(",time.var,",",status.var,")")
+      )
       model.cph <- rms::cph(formula(model.formula), data=new.data, surv=TRUE, se.fit = FALSE, y=TRUE, x=TRUE)
             
       ret <- list()
