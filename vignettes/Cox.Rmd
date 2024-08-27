@@ -1,0 +1,77 @@
+---
+title: "Using `glmBfp`: Cox models with test-based Bayes Factors"
+output: rmarkdown::html_vignette
+bibliography: examples.bib
+vignette: >
+  %\VignetteIndexEntry{Using `glmBfp`: Cox models with test-based Bayes Factors}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(glmBfp)
+```
+
+The `glmBfp` package implements a new approach to model fitting and variable selection which are described in two articles, @held2015approximate and @held2016objective.
+This vignette shows how to use the simplified interface for fitting Cox models with `glmBfp`.
+We use the SMART data described in \citet{Steyerberg2009} and available at [http://www.clinicalpredictionmodels.org]. The package includes a processed copy of this data with the missing values imputed and variables transformed as in the example code on that site
+
+```{r}
+data(SMARTfull)
+```
+
+
+The workhorse function of the package is `glmBayesMfp()` which does all the model fitting and returns a large list of possible models, which then need to be evaluated and selected from. To make things easier, `coxTBF()` is a simplified formula based interface to `glmBayesMfp()` that fits and chooses Cox models.
+   
+We first need to define the formula, using `Surv(time,event)`. The function needs to know which variables must be included in the model and which are "uncertain" should tested for inclusion. These are wrapped in the formula with `uc()`.
+
+```{r formulas, cache=TRUE}
+f1 <- Surv(TEVENT, EVENT) ~ AGE.TRANS + SEX +  uc(SMOKING) + 
+  uc(ALCOHOL) + uc(BMI) + uc(SYSTH) + uc(HDL) + uc(DIABETES) + 
+  uc(HISTCAR2)
+```
+Using this we can fit a model. We choose `type="MAP"` to select the model with maximum posterior probability. Other possibilities are the median probability model (`MPM`) and Bayesian model averages (`BMA`).
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+f1_MAP <- coxTBF(f1, data = SMARTfull, type="MAP", 
+                 useOpenMP=FALSE, chainlength=200)
+```
+
+The resulting object contains the formula of selected model and the coefficient estimates.
+```{r, cache = TRUE}
+f1_MAP$formula
+f1_MAP$coefs
+```
+Also included is the survivor function, so we can predict survival probabilities at specified times.
+
+```{r, cache=TRUE}
+predict(f1_MAP, times = c(100,1000,2000,3000), newdata = SMARTfull[1:3,])
+```
+
+
+Other parameters given to `coxTBF` are passed through to `glmBayesMfp`. This can be used to specify new $g$-priors and change MCMC options. We can also save the models found in the search for later investigation with `keepModelList=TRUE`. This time we select the MPM (median probability model). If this model is not one of the models found in the Monte Carlo search, then it is constructed and returned.
+
+```{r, message=FALSE,  cache=TRUE, warning=FALSE}
+# Hyper g/n.obs
+prior <- InvGammaGPrior(a=1/2, b=sum(SMARTfull$EVENT)/2)
+f1_MPM <- coxTBF(f1, data = SMARTfull, type="MPM", useOpenMP=FALSE,
+                 chainlength=500, nModels=50, keepModelList=TRUE, 
+                 priorSpecs=list(gPrior=prior, modelPrior="sparse"))
+```
+
+```{r, cache=TRUE}
+f1_MPM$formula
+f1_MPM$coefs
+```
+
+
+
+
+## References
