@@ -19,14 +19,14 @@
 ##' for Cox models. It calls \code{\link{sampleBma}} and then calculates coefficents based
 ##' on a linear fit.
 ##'
-##' @param models.listpart the glmBfp object for which to construct the survival formula
+##' @param model.listpart the glmBfp object for which to construct the survival formula
 ##' @param ... additional arguments to pass to \code{\link{sampleBma}}
 ##' @param sep should coefficients be returned separately (default=FALSE)
 ##' @return A named vector of coefficients. 
 ##'
 ##' @keywords internal utilities
 
-getModelCoefs <- function(model.listpart,mcmc, sep=FALSE){
+getModelCoefs <- function(model.listpart,mcmc, sep=FALSE, ...){
   
   DM <- getDesignMatrix(object=model.listpart, intercept=FALSE)
   n.coefs <- dim(DM)[2]

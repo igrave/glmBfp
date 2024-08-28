@@ -556,11 +556,11 @@ glmModelsInList(const DataValues& data,
     // now echo statistics:
     if (bookkeep.verbose)
     {
-        Rprintf("\nActual number of possible models:  %d ",
+        Rprintf("\nActual number of possible models:  %lu",
                 bookkeep.modelCounter);
-        Rprintf("\nNumber of non-identifiable models: %d",
+        Rprintf("\nNumber of non-identifiable models: %lu",
                 bookkeep.nanCounter);
-        Rprintf("\nNumber of saved possible models:   %d\n",
+        Rprintf("\nNumber of saved possible models:   %zu\n",
                 orderedModels.size());
     }
 
@@ -1043,7 +1043,7 @@ glmSampling(const DataValues& data,
     ret.attr("logNormConst") = logNormConst;
 
     if (bookkeep.verbose){
-        Rprintf("\nNumber of non-identifiable model proposals:     %d", bookkeep.nanCounter);
+        Rprintf("\nNumber of non-identifiable model proposals:     %lu", bookkeep.nanCounter);
         Rprintf("\nNumber of total cached models:                  %d", modelCache.size());
         Rprintf("\nNumber of returned models:                      %d\n", Rf_length(ret));
     }
@@ -1112,11 +1112,11 @@ glmExhaustive(const DataValues& data,
     // now echo statistics:
     if (bookkeep.verbose)
     {
-        Rprintf("\nActual number of possible models:  %d ",
+        Rprintf("\nActual number of possible models:  %lu",
                 bookkeep.modelCounter);
-        Rprintf("\nNumber of non-identifiable models: %d",
+        Rprintf("\nNumber of non-identifiable models: %lu",
                 bookkeep.nanCounter);
-        Rprintf("\nNumber of saved possible models:   %d\n",
+        Rprintf("\nNumber of saved possible models:   %zu\n",
                 orderedModels.size());
     }
 

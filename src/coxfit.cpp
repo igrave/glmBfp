@@ -262,7 +262,7 @@ Coxfit::checkResults() const
 
             for(int i=0; i < nCovs; ++i)
             {
-                if((infs[i] > eps) & (infs[i] > tolerInf * fabs(results.coefs[i])))
+                if((infs[i] > eps) && (infs[i] > tolerInf * fabs(results.coefs[i])))
                 {
                     notConverged.push_back(i + 1);
                 }

@@ -73,7 +73,7 @@ empiricalHpd <- function (theta,
 ##' @return A matrix with columns \dQuote{lower} and \dQuote{upper}, with the
 ##' lower and upper SCB bounds, respectively.
 ##'
-##' @references Besag, J.; Green, P.; Higdon, D. \& Mengersen, K. (1995):
+##' @references Besag, J.; Green, P.; Higdon, D. & Mengersen, K. (1995):
 ##'  \dQuote{Bayesian computation and stochastic systems (with
 ##'   discussion)}, \emph{Statistical Science}, 10, 3-66.
 ##' @seealso \code{\link{empiricalHpd}}

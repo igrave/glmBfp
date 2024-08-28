@@ -26,7 +26,7 @@ each gridpoint. Therefore the SCB might be considered an \dQuote{HPD
 SCB}.
 }
 \references{
-Besag, J.; Green, P.; Higdon, D. \& Mengersen, K. (1995):
+Besag, J.; Green, P.; Higdon, D. & Mengersen, K. (1995):
  \dQuote{Bayesian computation and stochastic systems (with
   discussion)}, \emph{Statistical Science}, 10, 3-66.
 }
