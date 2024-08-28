@@ -560,7 +560,7 @@ glmModelsInList(const DataValues& data,
                 bookkeep.modelCounter);
         Rprintf("\nNumber of non-identifiable models: %lu",
                 bookkeep.nanCounter);
-        Rprintf("\nNumber of saved possible models:   %llu\n",
+        Rprintf("\nNumber of saved possible models:   %zu\n",
                 orderedModels.size());
     }
 
@@ -1116,7 +1116,7 @@ glmExhaustive(const DataValues& data,
                 bookkeep.modelCounter);
         Rprintf("\nNumber of non-identifiable models: %lu",
                 bookkeep.nanCounter);
-        Rprintf("\nNumber of saved possible models:   %llu\n",
+        Rprintf("\nNumber of saved possible models:   %zu\n",
                 orderedModels.size());
     }
 
