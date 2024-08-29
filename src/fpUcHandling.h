@@ -8,9 +8,9 @@
 #ifndef FPUCHANDLING_H_
 #define FPUCHANDLING_H_
 
-#include <types.h>
+#include "types.h"
 #include <numeric>
-#include <rcppExport.h>
+#include "rcppExport.h"
 
 // ***************************************************************************************************//
 

@@ -8,9 +8,9 @@
 #ifndef ZDENSITY_H_
 #define ZDENSITY_H_
 
-#include <iwls.h>
-#include <coxfit.h>
-#include <types.h>
+#include "iwls.h"
+#include "coxfit.h"
+#include "types.h"
 
 // 21/11/2012: major update due to inclusion of TBF methodology
 

@@ -8,8 +8,8 @@
 #ifndef DESIGN_H_
 #define DESIGN_H_
 
-#include <dataStructure.h>
-#include <types.h>
+#include "dataStructure.h"
+#include "types.h"
 
 // construct centered design matrix including intercept for the model
 // optionally the intercept column is not included

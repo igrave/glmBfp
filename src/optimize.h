@@ -8,7 +8,7 @@
 #ifndef OPTIMIZE_H_
 #define OPTIMIZE_H_
 
-#include <types.h>
+#include "types.h"
 
 // modified from R's scalar function "optimize" routine "Brent_fmin"
 // in /src/appl/fmin.c,

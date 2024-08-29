@@ -8,7 +8,7 @@
 #ifndef COXFIT_H_
 #define COXFIT_H_
 
-#include <types.h>
+#include "types.h"
 
 //  Dynamic_2d_array class by David Maisonave (609-345-1007) (www.axter.com)
 //  Description:

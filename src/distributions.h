@@ -11,8 +11,8 @@
 #ifndef DISTRIBUTIONS_H_
 #define DISTRIBUTIONS_H_
 
-#include <types.h>
-#include <rcppExport.h>
+#include "types.h"
+#include "rcppExport.h"
 
 
 // ***************************************************************************************************//

@@ -8,7 +8,7 @@
 #ifndef LINALGINTERFACE_H_
 #define LINALGINTERFACE_H_
 
-#include <types.h>
+#include "types.h"
 
 
 // triangular solve of L * x = R
