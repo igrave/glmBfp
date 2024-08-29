@@ -7,17 +7,17 @@
  *      13/07/2015 Replace assert() with Rccp:Stop()
  */
 
-#include <rcppExport.h>
-#include <combinatorics.h>
-#include <dataStructure.h>
-#include <types.h>
-#include <iwls.h>
-#include <design.h>
-#include <coxfit.h>
-#include <bfgs.h>
-#include <optimize.h>
-#include <fpUcHandling.h>
-#include <linalgInterface.h>
+#include "rcppExport.h"
+#include "combinatorics.h"
+#include "dataStructure.h"
+#include "types.h"
+#include "iwls.h"
+#include "design.h"
+#include "coxfit.h"
+#include "bfgs.h"
+#include "optimize.h"
+#include "fpUcHandling.h"
+#include "linalgInterface.h"
 //#include <cassert>
 
 #ifdef _OPENMP

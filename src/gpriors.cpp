@@ -6,7 +6,7 @@
  */
 
 
-#include <gpriors.h>
+#include "gpriors.h"
 
 
 // compute M(a, b)

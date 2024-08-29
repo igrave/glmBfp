@@ -5,12 +5,12 @@
  *      Author: daniel
  */
 
-#include <design.h>
-#include <fpUcHandling.h>
-#include <dataStructure.h>
+#include "design.h"
+#include "fpUcHandling.h"
+#include "dataStructure.h"
 
-#include <rcppExport.h>
-#include <types.h>
+#include "rcppExport.h"
+#include "types.h"
 
 #include <algorithm>
 

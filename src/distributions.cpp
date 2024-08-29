@@ -9,10 +9,10 @@
  *
  */
 
-#include <distributions.h>
+#include "distributions.h"
 #include <string>
-#include <types.h>
-#include <rcppExport.h>
+#include "types.h"
+#include "rcppExport.h"
 
 // ***************************************************************************************************//
 

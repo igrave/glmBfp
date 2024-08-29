@@ -8,8 +8,8 @@
 #ifndef IWLS_H_
 #define IWLS_H_
 
-#include <design.h>
-#include <types.h>
+#include "design.h"
+#include "types.h"
 
 
 // only one parameter set for the GLM

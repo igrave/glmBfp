@@ -11,7 +11,7 @@
 #ifndef LINKS_H_
 #define LINKS_H_
 
-#include <rcppExport.h>
+#include "rcppExport.h"
 
 static const double THRESH = 30.;
 static const double MTHRESH = -30.;

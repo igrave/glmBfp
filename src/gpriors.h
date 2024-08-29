@@ -11,8 +11,8 @@
 #ifndef GPRIORS_H_
 #define GPRIORS_H_
 
-#include <rcppExport.h>
-#include <functionWraps.h>
+#include "rcppExport.h"
+#include "functionWraps.h"
 
 
 // ***************************************************************************************************//

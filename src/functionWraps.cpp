@@ -5,8 +5,8 @@
  *      Author: daniel
  */
 
-#include <functionWraps.h>
-#include <rcppExport.h>
+#include "functionWraps.h"
+#include "rcppExport.h"
 
 using namespace Rcpp;
 

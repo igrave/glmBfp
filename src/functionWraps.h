@@ -8,8 +8,8 @@
 #ifndef FUNCTIONWRAPS_H_
 #define FUNCTIONWRAPS_H_
 
-#include <rcppExport.h>
-#include <types.h>
+#include "rcppExport.h"
+#include "types.h"
 
 // ***************************************************************************************************//
 

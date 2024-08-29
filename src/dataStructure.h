@@ -8,13 +8,13 @@
 #include <numeric>
 #include <string>
 
-#include <rcppExport.h>
-#include <types.h>
-#include <functionWraps.h>
-#include <fpUcHandling.h>
-#include <links.h>
-#include <distributions.h>
-#include <gpriors.h>
+#include "rcppExport.h"
+#include "types.h"
+#include "functionWraps.h"
+#include "fpUcHandling.h"
+#include "links.h"
+#include "distributions.h"
+#include "gpriors.h"
 
 
 // ***************************************************************************************************//
