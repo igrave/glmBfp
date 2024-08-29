@@ -7,12 +7,12 @@
  *  13/07/2015 Replace assert() with Rccp:Stop()
  */
 
-#include <fpUcHandling.h>
+#include "fpUcHandling.h"
 
 //#include <cassert>
 #include <algorithm>
 
-#include <rcppExport.h>
+#include "rcppExport.h"
 
 // ***************************************************************************************************//
 

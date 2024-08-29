@@ -1,14 +1,14 @@
 // *      13/07/2015 Replace assert() with Rccp:Stop()
 
 
-#include <iwls.h>
-#include <types.h>
-#include <rcppExport.h>
+#include "iwls.h"
+#include "types.h"
+#include "rcppExport.h"
 //#include <cassert>
-#include <design.h>
+#include "design.h"
 #include <stdexcept>
 #include <sstream>
-#include <linalgInterface.h>
+#include "linalgInterface.h"
 
 // criterion for comparison of two Column vectors of the same size
 // max_j (abs(a_j - b_j) / abs(b_j) + 0.01)

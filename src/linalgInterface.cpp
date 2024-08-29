@@ -12,7 +12,7 @@
 #include <cassert>
 #define ARMA_BLAS_CAPITALS
 #define ARMA_LAPACK_CAPITALS
-#include <linalgInterface.h>
+#include "linalgInterface.h"
 
 #include <Rconfig.h>
 #include <R_ext/Lapack.h>

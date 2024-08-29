@@ -4,12 +4,12 @@
 #include <string>
 #include <sstream>
 
-#include <dataStructure.h>
-#include <sum.h>
-#include <functionWraps.h>
-#include <fpUcHandling.h>
+#include "dataStructure.h"
+#include "sum.h"
+#include "functionWraps.h"
+#include "fpUcHandling.h"
 
-#include <rcppExport.h>
+#include "rcppExport.h"
 
 using std::lexicographical_compare;
 using std::accumulate;

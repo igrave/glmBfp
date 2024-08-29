@@ -4,9 +4,9 @@
 //             Replace cout and exit
 //
 
-#include <combinatorics.h>
+#include "combinatorics.h"
 #include <iostream>
-#include <types.h>
+#include "types.h"
 #include <cstdlib>
 #include <Rcpp.h>
 
