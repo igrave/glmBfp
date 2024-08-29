@@ -10,8 +10,8 @@
 #endif
 
 #include <cassert>
-#define ARMA_BLAS_CAPITALS
-#define ARMA_LAPACK_CAPITALS
+//#define ARMA_BLAS_CAPITALS
+//#define ARMA_LAPACK_CAPITALS
 #include "linalgInterface.h"
 
 #include <Rconfig.h>
