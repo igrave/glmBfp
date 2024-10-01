@@ -5,15 +5,35 @@
 \alias{GlmBayesMfp}
 \title{Bayesian model inference for fractional polynomial GLMs and Cox models}
 \usage{
-glmBayesMfp(formula = formula(data), censInd = NULL,
-  data = parent.frame(), weights, offset, family, phi = 1, tbf = FALSE,
-  empiricalBayes = FALSE, fixedg = NULL, priorSpecs = list(gPrior =
-  HypergPrior(), modelPrior = "sparse"), method = c("ask", "exhaustive",
-  "sampling"), subset, na.action = na.omit, verbose = TRUE, debug = FALSE,
-  nModels, nCache = 1e+09, chainlength = 10000, nGaussHermite = 20,
-  useBfgs = FALSE, largeVariance = 100, useOpenMP = TRUE,
-  higherOrderCorrection = FALSE, fixedcfactor = FALSE,
-  empiricalgPrior = FALSE, centerX = TRUE)
+glmBayesMfp(
+  formula = formula(data),
+  censInd = NULL,
+  data = parent.frame(),
+  weights,
+  offset,
+  family,
+  phi = 1,
+  tbf = FALSE,
+  empiricalBayes = FALSE,
+  fixedg = NULL,
+  priorSpecs = list(gPrior = HypergPrior(), modelPrior = "sparse"),
+  method = c("ask", "exhaustive", "sampling"),
+  subset,
+  na.action = na.omit,
+  verbose = TRUE,
+  debug = FALSE,
+  nModels,
+  nCache = 1e+09,
+  chainlength = 10000,
+  nGaussHermite = 20,
+  useBfgs = FALSE,
+  largeVariance = 100,
+  useOpenMP = TRUE,
+  higherOrderCorrection = FALSE,
+  fixedcfactor = FALSE,
+  empiricalgPrior = FALSE,
+  centerX = TRUE
+)
 }
 \arguments{
 \item{formula}{model formula}
