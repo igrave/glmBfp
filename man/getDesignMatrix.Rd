@@ -4,8 +4,12 @@
 \alias{getDesignMatrix}
 \title{Construct the design matrix for a given bfp GLM model}
 \usage{
-getDesignMatrix(modelConfig = object[[1]]$configuration, object,
-  intercept = TRUE, center = TRUE)
+getDesignMatrix(
+  modelConfig = object[[1]]$configuration,
+  object,
+  intercept = TRUE,
+  center = TRUE
+)
 }
 \arguments{
 \item{modelConfig}{the model configuration list which must have elements

@@ -20,21 +20,17 @@
 ## 03/12/2012   add "Cox" into the title
 #####################################################################################
 
-##' Bayesian inference for fractional polynomial models from the GLM and Cox
-##' family 
-##'
-##' @name glmBfp-package
-##' @aliases glmBfp
-##' @docType package
-##' @title Bayesian inference for fractional polynomial models from the GLM
-##' and Cox family
-##' @author Daniel Sabanes Bove \email{daniel.sabanesbove@@ifspm.uzh.ch}
-##' @useDynLib glmBfp
-##' cpp_glmBayesMfp cpp_bfgs cpp_optimize cpp_sampleGlm cpp_evalZdensity
-##' cpp_coxfit
-##' @importFrom graphics plot hist
-##' @importFrom methods setClass setOldClass setGeneric setMethod representation
-##' signature prototype initialize new
-##' @importFrom Runuran pinv.new ur "unuran.packed<-" unuran.details
-##' @keywords package
-{}
+#' Bayesian inference for fractional polynomial models from the GLM and Cox
+#' family 
+#' @references 
+#' \itemize{
+#'  \item Leonhard Held, Daniel Sabanés Bové, and Isaac Gravestock. "Approximate Bayesian model selection with the deviance statistic." Statistical Science (2015): 242-257.
+#'  \item Leonhard Held, Isaac Gravestock, and Daniel Sabanés Bové. "Objective Bayesian model selection for Cox regression." Statistics in Medicine 35.29 (2016): 5376-5390.
+#' }  
+#' @useDynLib glmBfp, .registration=TRUE
+#' @importFrom graphics plot hist
+#' @importFrom methods setClass setOldClass setGeneric setMethod representation
+#' signature prototype initialize new
+#' @importFrom Runuran pinv.new ur "unuran.packed<-" unuran.details
+#' @keywords internal
+"_PACKAGE"

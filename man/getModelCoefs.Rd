@@ -7,9 +7,9 @@
 getModelCoefs(model.listpart, mcmc, sep = FALSE, ...)
 }
 \arguments{
-\item{sep}{should coefficients be returned separately (default=FALSE)}
-
 \item{model.listpart}{the glmBfp object for which to construct the survival formula}
+
+\item{sep}{should coefficients be returned separately (default=FALSE)}
 
 \item{...}{additional arguments to pass to \code{\link{sampleBma}}}
 }

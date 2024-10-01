@@ -6,8 +6,7 @@ Imports:
     methods,
     coda,
     Runuran (>= 0.12),
-    Rcpp (>= 0.11.6),
-    knitr
+    Rcpp (>= 0.11.6)
 License: GPL (>= 2)
 Title: Bayesian Fractional Polynomials for GLMs
 LinkingTo: Rcpp, RcppArmadillo
@@ -21,14 +20,16 @@ Authors@R: c(person("Isaac","Gravestock", role=c("aut","cre"), email="isaac.grav
             )
 Description: Implements the Bayesian paradigm
     for fractional polynomials in generalized linear
-    models, described by Held, Gravestock, Sabanes Bove (2015) <doi:10.1214/14-STS510>.
+    models, described by Held, Sabanes Bove, Gravestock(2015) <doi:10.1214/14-STS510>
+    and Cox models described by Held, Gravestock, Sabanes Bove (2016) <doi:10.1002/sim.7090>.
     See package 'bfp' for the treatment of normal models.
 Version: 0.0-61
 Depends: R (>= 4.0.0)
 Encoding: UTF-8
 Suggests:
     MASS,
-    rmarkdown
+    rmarkdown,
+    knitr
 VignetteBuilder: knitr
 Collate:
     'GPrior-classes.R'

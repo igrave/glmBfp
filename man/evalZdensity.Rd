@@ -5,8 +5,14 @@
 \title{Evaluate the (negative log) unnormalized marginal z density in a given
 model.}
 \usage{
-evalZdensity(config, object, zValues, conditional = FALSE, debug = FALSE,
-  higherOrderCorrection = FALSE)
+evalZdensity(
+  config,
+  object,
+  zValues,
+  conditional = FALSE,
+  debug = FALSE,
+  higherOrderCorrection = FALSE
+)
 }
 \arguments{
 \item{config}{the configuration of a single \code{GlmBayesMfp} model. The

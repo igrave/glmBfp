@@ -4,8 +4,12 @@
 \alias{computeModels}
 \title{Compute model information for a given list of model configurations and glmBayesMfp output.}
 \usage{
-computeModels(configurations, object, verbose = length(configurations) > 100L,
-  debug = FALSE)
+computeModels(
+  configurations,
+  object,
+  verbose = length(configurations) > 100L,
+  debug = FALSE
+)
 }
 \arguments{
 \item{configurations}{list of the model configurations}

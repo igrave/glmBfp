@@ -2,15 +2,33 @@
 % Please edit documentation in R/glmBfp-package.R
 \docType{package}
 \name{glmBfp-package}
-\alias{glmBfp-package}
 \alias{glmBfp}
-\title{Bayesian inference for fractional polynomial models from the GLM
-and Cox family}
+\alias{glmBfp-package}
+\title{Bayesian inference for fractional polynomial models from the GLM and Cox
+family}
 \description{
-Bayesian inference for fractional polynomial models from the GLM and Cox
-family
+Implements the Bayesian paradigm for fractional polynomials in generalized linear models, described by Held, Sabanes Bove, Gravestock(2015) \doi{10.1214/14-STS510} and Cox models described by Held, Gravestock, Sabanes Bove (2016) \doi{10.1002/sim.7090}. See package 'bfp' for the treatment of normal models.
+}
+\references{
+\itemize{
+ \item Leonhard Held, Daniel Sabanés Bové, and Isaac Gravestock. "Approximate Bayesian model selection with the deviance statistic." Statistical Science (2015): 242-257.
+ \item Leonhard Held, Isaac Gravestock, and Daniel Sabanés Bové. "Objective Bayesian model selection for Cox regression." Statistics in medicine 35.29 (2016): 5376-5390.
+}
 }
 \author{
-Daniel Sabanes Bove \email{daniel.sabanesbove@ifspm.uzh.ch}
+\strong{Maintainer}: Isaac Gravestock \email{isaac.gravestock@gmail.com}
+
+Authors:
+\itemize{
+  \item Daniel Sabanes Bove
 }
-\keyword{package}
+
+Other contributors:
+\itemize{
+  \item David Maisonave [contributor]
+  \item Terry Therneau [contributor]
+  \item R Core Team [contributor]
+}
+
+}
+\keyword{internal}
