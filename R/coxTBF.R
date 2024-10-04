@@ -11,7 +11,7 @@
 
 ##' @include helpers.R
 ##' @include getDesignMatrix.R
-{}
+NULL
 
 
 ##' Fit Cox models using glmBayesMfp
