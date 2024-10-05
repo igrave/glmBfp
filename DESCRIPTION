@@ -69,3 +69,4 @@ Collate:
     'uncenteredDesignMatrix.R'
     'writeFormula.R'
 RoxygenNote: 7.3.2
+Language: en-US

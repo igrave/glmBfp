@@ -5,16 +5,16 @@
 ## Time-stamp: <[inclusionProbs.R] by DSB Die 01/12/2009 13:21 (CET)>
 ##
 ## Description:
-## Compute (model averaged) posterior inclusion probabilites for the uncertain
+## Compute (model averaged) posterior inclusion probabilities for the uncertain
 ## variables (including FP variables) based on a GlmBayesMfp object.
 ##
 ## History:
 ## 01/12/2009   modify from the bfp package, and add roxygen tags.
 #####################################################################################
 
-##' Compute posterior inclusion probabilites based on GlmBayesMfp object
+##' Compute posterior inclusion probabilities based on GlmBayesMfp object
 ##'
-##' Compute (model averaged) posterior inclusion probabilites for the uncertain
+##' Compute (model averaged) posterior inclusion probabilities for the uncertain
 ##' variables (including FP variables) based on a GlmBayesMfp object.
 ##'
 ##' @param GlmBayesMfpObject the GlmBayesMfp object

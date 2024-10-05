@@ -582,7 +582,7 @@ struct ModelMcmc
     PosIntSet freeCovs; // indices of free covs (starting from first fp with index 1 up to uc index = nFps + 1)
     PosIntSet presentCovs; // analogue
 
-    double birthprob, deathprob, moveprob; // move type probabilites, switchprob is 1-bprob-dprob-mprob.
+    double birthprob, deathprob, moveprob; // move type probabilities, switchprob is 1-bprob-dprob-mprob.
     double logMargLik;
     double logPrior;
 };

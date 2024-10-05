@@ -22,7 +22,7 @@
 ##' @param powers one or more powers
 ##' @param scale value to scale the variable after shifting (default=1)
 ##' @param shift value to shift the variable by (default=0)
-##' @param center center the variable when tranforming.
+##' @param center center the variable when transforming.
 ##' 
 ##' @return the transformed vector
 ##' @keywords utilities

@@ -100,7 +100,7 @@ as.data.frame.GlmBayesMfp <- function (x,
                                        freq = FALSE
                                        )
 {
-    ## posterior probabilites:
+    ## posterior probabilities:
     ret <- data.frame (posterior=
                        posteriors(x, type="normalized"))
     if (! is.null(attr(x, "searchConfig")$chainlength) &&

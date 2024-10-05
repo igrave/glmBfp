@@ -55,7 +55,7 @@
 ##' and the burn-in and thinning parameters applied to each model (see above).
 ##' If TBF is used, each sample is accepted, and the number of samples is given
 ##' by \code{\link{sampleSize}}(\code{mcmc}).
-##' @param postProbs vector of posterior probabilites (will be normalized within
+##' @param postProbs vector of posterior probabilities (will be normalized within
 ##' the function) for the weighting of the models in \code{object} (defaults to
 ##' the normalized posterior probabilities)
 ##' @param nMargLikSamples If this is non-\code{NULL}, it specified the number

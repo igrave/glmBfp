@@ -23,7 +23,7 @@ events in patients with symptomatic cardiovascular disease.
     \item{\code{SMOKING}}{a factor with levels \code{1} Never \code{2} Former \code{3} Current}
     \item{\code{ALCOHOL}}{a factor with levels \code{1} Never \code{2} Former \code{3} Current}
     \item{\code{BMI}}{a numeric vector (imputed). Body mass index (kg/m^2)}
-    \item{\code{SYSTH}}{a numeric vector (imputed).  Systomlic blood pressure (mm/Hg)}
+    \item{\code{SYSTH}}{a numeric vector (imputed).  Systolic blood pressure (mm/Hg)}
     \item{\code{HDL}}{a numeric vector (imputed). High-density lipoprotein cholesterol (mmol/L)}
     \item{\code{DIABETES}}{a numeric vector (imputed). Ever diabetes (0/1)}
     \item{\code{HISTCAR2}}{a numeric vector. History of cardiac disease score.}
