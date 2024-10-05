@@ -1,7 +1,7 @@
 #####################################################################################
 ## Author: Daniel Sabanes Bove [daniel *.* sabanesbove *a*t* ifspm *.* uzh *.* ch]
 ## Project: Bayesian FPs for GLMs.
-## 
+##
 ## Time-stamp: <[inclusionProbs.R] by DSB Die 01/12/2009 13:21 (CET)>
 ##
 ## Description:
@@ -24,34 +24,34 @@
 ##'
 ##' @export
 ##' @keywords utilities
-inclusionProbs <- function (GlmBayesMfpObject,
-                            postProbs=
-                            posteriors(GlmBayesMfpObject,
-                                       type="normalized"))
-{
-    postProbs <- postProbs / sum(postProbs)
-    inds <- attr (GlmBayesMfpObject, "indices")
-    termNames <- attr (GlmBayesMfpObject, "termNames")
+inclusionProbs <- function(GlmBayesMfpObject,
+                           postProbs =
+                             posteriors(GlmBayesMfpObject,
+                               type = "normalized"
+                             )) {
+  postProbs <- postProbs / sum(postProbs)
+  inds <- attr(GlmBayesMfpObject, "indices")
+  termNames <- attr(GlmBayesMfpObject, "termNames")
 
-    nams <- unlist (termNames[c ("bfp", "uc")])
-    ret <- numeric (length (nams))
-    names (ret) <- nams
+  nams <- unlist(termNames[c("bfp", "uc")])
+  ret <- numeric(length(nams))
+  names(ret) <- nams
 
-    i <- 0
+  i <- 0
 
-    for (j in seq_along (inds$bfp)){
-        i <- i + 1
-        present <- sapply (GlmBayesMfpObject, function (one) as.logical (length (one$configuration$powers[[j]])))
-        ret[i] <- sum (present * postProbs)
-    }
+  for (j in seq_along(inds$bfp)) {
+    i <- i + 1
+    present <- sapply(GlmBayesMfpObject, function(one) as.logical(length(one$configuration$powers[[j]])))
+    ret[i] <- sum(present * postProbs)
+  }
 
-    for (j in seq_along (inds$ucList)){
-        i <- i + 1
-        present <- sapply (GlmBayesMfpObject, function (one) any (j == one$configuration$ucTerms))
-        ret[i] <- sum (present * postProbs)
-    }
+  for (j in seq_along(inds$ucList)) {
+    i <- i + 1
+    present <- sapply(GlmBayesMfpObject, function(one) any(j == one$configuration$ucTerms))
+    ret[i] <- sum(present * postProbs)
+  }
 
-    return (ret)
+  return(ret)
 }
 
 ## ****************************************************************************************************
