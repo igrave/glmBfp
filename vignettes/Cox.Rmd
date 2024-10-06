@@ -33,15 +33,17 @@ The workhorse function of the package is `glmBayesMfp()` which does all the mode
 We first need to define the formula, using `Surv(time,event)`. The function needs to know which variables must be included in the model and which are "uncertain" should tested for inclusion. These are wrapped in the formula with `uc()`.
 
 ```{r formulas, cache=TRUE}
-f1 <- Surv(TEVENT, EVENT) ~ AGE.TRANS + SEX +  uc(SMOKING) + 
-  uc(ALCOHOL) + uc(BMI) + uc(SYSTH) + uc(HDL) + uc(DIABETES) + 
+f1 <- Surv(TEVENT, EVENT) ~ AGE.TRANS + SEX + uc(SMOKING) +
+  uc(ALCOHOL) + uc(BMI) + uc(SYSTH) + uc(HDL) + uc(DIABETES) +
   uc(HISTCAR2)
 ```
 Using this we can fit a model. We choose `type="MAP"` to select the model with maximum posterior probability. Other possibilities are the median probability model (`MPM`) and Bayesian model averages (`BMA`).
 
 ```{r, message=FALSE, warning=FALSE, cache=TRUE}
-f1_MAP <- coxTBF(f1, data = SMARTfull, type="MAP", 
-                 useOpenMP=FALSE, chainlength=200)
+f1_MAP <- coxTBF(f1,
+  data = SMARTfull, type = "MAP",
+  useOpenMP = FALSE, chainlength = 200
+)
 ```
 
 The resulting object contains the formula of selected model and the coefficient estimates.
@@ -52,7 +54,7 @@ f1_MAP$coefs
 Also included is the survivor function, so we can predict survival probabilities at specified times.
 
 ```{r, cache=TRUE}
-predict(f1_MAP, times = c(100,1000,2000,3000), newdata = SMARTfull[1:3,])
+predict(f1_MAP, times = c(100, 1000, 2000, 3000), newdata = SMARTfull[1:3, ])
 ```
 
 
@@ -60,10 +62,12 @@ Other parameters given to `coxTBF` are passed through to `glmBayesMfp`. This can
 
 ```{r, message=FALSE,  cache=TRUE, warning=FALSE}
 # Hyper g/n.obs
-prior <- InvGammaGPrior(a=1/2, b=sum(SMARTfull$EVENT)/2)
-f1_MPM <- coxTBF(f1, data = SMARTfull, type="MPM", useOpenMP=FALSE,
-                 chainlength=500, nModels=50, keepModelList=TRUE, 
-                 priorSpecs=list(gPrior=prior, modelPrior="sparse"))
+prior <- InvGammaGPrior(a = 1 / 2, b = sum(SMARTfull$EVENT) / 2)
+f1_MPM <- coxTBF(f1,
+  data = SMARTfull, type = "MPM", useOpenMP = FALSE,
+  chainlength = 500, nModels = 50, keepModelList = TRUE,
+  priorSpecs = list(gPrior = prior, modelPrior = "sparse")
+)
 ```
 
 ```{r, cache=TRUE}

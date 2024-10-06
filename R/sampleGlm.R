@@ -1,16 +1,16 @@
 #####################################################################################
 ## Author: Daniel Sabanes Bove [daniel *.* sabanesbove *a*t* ifspm *.* uzh *.* ch]
 ## Project: Bayesian FPs for GLMs
-## 
+##
 ## Time-stamp: <[sampleGlm.R] by DSB Mon 26/08/2013 15:43 (CEST)>
 ##
 ## Description:
-## Produce posterior samples from one GLM returned by glmBayesMfp, using an MCMC sampler. 
+## Produce posterior samples from one GLM returned by glmBayesMfp, using an MCMC sampler.
 ##
 ## History:
 ## 10/12/2009   file creation
 ## 05/01/2010   construct the random number generator for the marginal z approximation
-##              *inside* the helper function, so that we can use the normalizing constant 
+##              *inside* the helper function, so that we can use the normalizing constant
 ##              computed by Runuran instead of doing another "integrate" call.
 ## 06/01/2010   add postprocessing of the coefficients samples
 ## 16/02/2010   correct title of getLogMargLikEstimate man page
@@ -65,15 +65,15 @@
 ##' If TBF is used, each sample is accepted, and the number of samples is given
 ##' by \code{\link{sampleSize}}(\code{mcmc}).
 ##' @param estimateMargLik shall the marginal likelihood be estimated in
-##' parallel? (default) Only has an effect if full Bayes and not TBF is used. 
+##' parallel? (default) Only has an effect if full Bayes and not TBF is used.
 ##' @param gridList optional list of appropriately named grid vectors for FP
 ##' evaluation. Default is length (\code{gridSize} - 2) grid per covariate
-##' additional to the observed values (two are at the endpoints) 
+##' additional to the observed values (two are at the endpoints)
 ##' @param gridSize see above (default: 203)
 ##' @param newdata new covariate data.frame with exactly the names (and
 ##' preferably ranges) as before (default: no new covariate data) Note that
 ##' there is no option for offsets for new data at the moment. Just add the
-##' offsets to the \code{predictions} slot of \code{samples} in the return list 
+##' offsets to the \code{predictions} slot of \code{samples} in the return list
 ##' yourself.
 ##' @param fixedZ either \code{NULL} (default) or a (single) fixed z value to
 ##' be used, in order to sample from the conditional posterior given this z.
@@ -93,13 +93,13 @@
 ##' @param debug print debugging information? (not default)
 ##' @param useOpenMP shall OpenMP be used to accelerate the computations?
 ##' (default)
-##' @param correctedCenter If TRUE predict new data based on the centering 
+##' @param correctedCenter If TRUE predict new data based on the centering
 ##' of the original data.
-##' 
+##'
 ##' @return Returns a list with the following elements:
 ##' \describe{
 ##' \item{samples}{an object of S4 class
-##' \code{\linkS4class{GlmBayesMfpSamples}}} 
+##' \code{\linkS4class{GlmBayesMfpSamples}}}
 ##' \item{coefficients}{samples of all original coefficients in the model
 ##' (nCoefs x nSamples)}
 ##' \item{acceptanceRatio}{proportion of accepted Metropolis-Hastings proposals}
@@ -117,32 +117,35 @@
 ##' @export
 ##' @keywords models regression
 sampleGlm <-
-    function(object,
-             mcmc=McmcOptions(),
-             estimateMargLik=TRUE,
-             gridList=list(),
-             gridSize=203L,
-             newdata=NULL,
-             fixedZ=NULL,
-             marginalZApprox=NULL,
-             verbose=TRUE,
-             debug=FALSE,
-             useOpenMP=TRUE,
-             correctedCenter=FALSE)
-{
+  function(object,
+           mcmc = McmcOptions(),
+           estimateMargLik = TRUE,
+           gridList = list(),
+           gridSize = 203L,
+           newdata = NULL,
+           fixedZ = NULL,
+           marginalZApprox = NULL,
+           verbose = TRUE,
+           debug = FALSE,
+           useOpenMP = TRUE,
+           correctedCenter = FALSE) {
     ## check the object
-    if(! inherits(object, "GlmBayesMfp"))
-        stop(simpleError("object must be of class GlmBayesMfp"))
-    if(! (length(object) >= 1L))
-        stop(simpleError("there has to be at least one model in the object"))
+    if (!inherits(object, "GlmBayesMfp")) {
+      stop(simpleError("object must be of class GlmBayesMfp"))
+    }
+    if (!(length(object) >= 1L)) {
+      stop(simpleError("there has to be at least one model in the object"))
+    }
 
     ## other checks
-    stopifnot(is.bool(estimateMargLik),
-              is.bool(verbose),
-              is.bool(debug),
-              is(mcmc, "McmcOptions"),
-              is.bool(useOpenMP))
-    
+    stopifnot(
+      is.bool(estimateMargLik),
+      is.bool(verbose),
+      is.bool(debug),
+      is(mcmc, "McmcOptions"),
+      is.bool(useOpenMP)
+    )
+
     ## coerce newdata to data frame
     newdata <- as.data.frame(newdata)
     nNewObs <- nrow(newdata)
@@ -169,39 +172,42 @@ sampleGlm <-
     info <- model$information
 
     ## get the (centered) design matrix of the model for the original data
-    design <- getDesignMatrix(modelConfig=config,
-                              object=object,
-                              intercept=doGlm) 
+    design <- getDesignMatrix(
+      modelConfig = config,
+      object = object,
+      intercept = doGlm
+    )
     ## the model dimension (including the intercept for GLMs)
     modelDim <- ncol(design)
-    
+
     ## check if the model is the null model
-    isNullModel <- identical(modelDim,
-                             ifelse(doGlm,
-                                    1L,
-                                    0L))
+    isNullModel <- identical(
+      modelDim,
+      ifelse(doGlm,
+        1L,
+        0L
+      )
+    )
 
     ## check / modify the fixedZ option
-    if(isNullModel &&
-       is.null(fixedZ))
-    {
-        fixedZ <- 0
+    if (isNullModel &&
+      is.null(fixedZ)) {
+      fixedZ <- 0
+    } else if ((attrs$searchConfig$useFixedg ||
+      attrs$searchConfig$empiricalBayes) &&
+      is.null(fixedZ)) {
+      fixedZ <- info$zMode
     }
-    else if((attrs$searchConfig$useFixedg ||
-             attrs$searchConfig$empiricalBayes) &&
-            is.null(fixedZ))
-    {
-        fixedZ <- info$zMode
-    }
-    
-    if(useFixedZ <- ! is.null(fixedZ))
-    {
-        stopifnot(is.numeric(fixedZ),
-                  is.finite(fixedZ),
-                  identical(length(fixedZ), 1L))
+
+    if (useFixedZ <- !is.null(fixedZ)) {
+      stopifnot(
+        is.numeric(fixedZ),
+        is.finite(fixedZ),
+        identical(length(fixedZ), 1L)
+      )
     } else {
-        ## give some value to fixedZ for the C++ code side...
-        fixedZ <- 0
+      ## give some value to fixedZ for the C++ code side...
+      fixedZ <- 0
     }
 
     ## extract TBF and g-prior info
@@ -209,81 +215,88 @@ sampleGlm <-
     gPrior <- attrs$distribution$gPrior
 
     ## correct estimateMargLik option
-    estimateMargLik <- estimateMargLik && (! tbf)
+    estimateMargLik <- estimateMargLik && (!tbf)
 
     ## correct MCMC option
-    if(tbf)
-    {
-        mcmc <- McmcOptions(burnin=0L,
-                            step=1L,
-                            samples=sampleSize(mcmc))
+    if (tbf) {
+      mcmc <- McmcOptions(
+        burnin = 0L,
+        step = 1L,
+        samples = sampleSize(mcmc)
+      )
     }
-    
+
     ## compute the selected approximation to the marginal z posterior,
     ## including the log density and the random number generator for it
     marginalz <-
-        if(useFixedZ)
-        {
-            ## this is for the special case with a fixed z
-            list(logDens=function(z) ifelse(z == fixedZ, 0, -Inf),
-                 gen=function(n=1) rep.int(fixedZ, n))
+      if (useFixedZ) {
+        ## this is for the special case with a fixed z
+        list(
+          logDens = function(z) ifelse(z == fixedZ, 0, -Inf),
+          gen = function(n = 1) rep.int(fixedZ, n)
+        )
+      } else {
+        if (tbf && is(gPrior, "IncInvGammaGPrior")) {
+          ## analytical solution possible in this case!
+          ## compute posterior parameters of IncIG:
+          a <- gPrior@a + (modelDim - 1) / 2
+          b <- gPrior@b + info$residualDeviance / 2
+
+          list(
+            logDens =
+              function(z) {
+                logNormConst <-
+                  ifelse(b > 0,
+                    a * log(b) - pgamma(b, a, log.p = TRUE) - lgamma(a),
+                    log(a)
+                  )
+                logNormConst - (a + 1) * log1p(exp(z)) -
+                  b / (1 + exp(z)) + z
+              },
+            gen =
+              function(n = 1) {
+                p <- runif(n = n)
+
+                ret <-
+                  if (b > 0) {
+                    b / qgamma(
+                      p = (1 - p) * pgamma(b, a),
+                      shape = a
+                    ) - 1
+                  } else {
+                    (1 - p)^(-1 / a) - 1
+                  }
+                return(ret)
+              }
+          )
         } else {
-            if(tbf && is(gPrior, "IncInvGammaGPrior"))
-            {
-                ## analytical solution possible in this case!
-                ## compute posterior parameters of IncIG:
-                a <- gPrior@a + (modelDim - 1) / 2               
-                b <- gPrior@b + info$residualDeviance / 2
-                
-                list(logDens=
-                     function(z){
-                         logNormConst <-
-                             ifelse(b > 0,
-                                    a * log(b) - pgamma(b, a, log.p=TRUE) - lgamma(a),
-                                    log(a))                         
-                         logNormConst - (a + 1) * log1p(exp(z)) -
-                             b / (1 + exp(z)) + z
-                     },
-                     gen=
-                     function(n=1){
-                         p <- runif(n=n)
-                         
-                         ret <-
-                             if(b > 0)
-                             {
-                                 b / qgamma(p=(1 - p) * pgamma(b, a),
-                                            shape=a) - 1
-                             } else {
-                                 (1 - p)^(-1/a) - 1
-                             }
-                         return(ret)
-                     })
-            } else {
-                ## the usual way:
-                getMarginalZ(info,
-                             method=marginalZApprox,
-                             verbose=verbose)
-            }
+          ## the usual way:
+          getMarginalZ(info,
+            method = marginalZApprox,
+            verbose = verbose
+          )
         }
-    
+      }
+
     ## pack the info in handy lists:
-    
+
     ## pack the options
-    options <- list(mcmc=mcmc,
-                    estimateMargLik=estimateMargLik,
-                    verbose=verbose,
-                    debug=debug,
-                    isNullModel=isNullModel,
-                    useFixedZ=useFixedZ,
-                    fixedZ=as.double(fixedZ),
-                    useOpenMP=useOpenMP)
+    options <- list(
+      mcmc = mcmc,
+      estimateMargLik = estimateMargLik,
+      verbose = verbose,
+      debug = debug,
+      isNullModel = isNullModel,
+      useFixedZ = useFixedZ,
+      fixedZ = as.double(fixedZ),
+      useOpenMP = useOpenMP
+    )
 
     ## start the progress bar (is continued in the C++ code)
-    if(verbose)
-    {
-        cat ("0%", rep ("_", 100 - 6), "100%\n", sep = "")
+    if (verbose) {
+      cat("0%", rep("_", 100 - 6), "100%\n", sep = "")
     }
-    
+
     ## then call C++ to do the rest:
     cppResults <- cpp_sampleGlm(
       model,
@@ -294,48 +307,60 @@ sampleGlm <-
       attrs$distribution,
       attrs$searchConfig,
       options,
-      marginalz)
+      marginalz
+    )
 
     ## start return list
     results <- list()
 
     ## add info on tbf
     results$tbf <- tbf
-    
+
     ## compute acceptance ratio
     results$acceptanceRatio <-
-        if(tbf)
-            1 ## we do Monte Carlo in the TBF case!
-        else
-            cppResults$nAccepted / mcmc@iterations
+      if (tbf) {
+        1
+      } ## we do Monte Carlo in the TBF case!
+      else {
+        cppResults$nAccepted / mcmc@iterations
+      }
 
     ## are we again verbose?
-    if(verbose)
-    {
-        if(tbf)
-            cat("\nFinished MC simulation from approximate parameter posterior\n")
-        else
-            cat("\nFinished MCMC simulation with acceptance ratio",
-                round(results$acceptanceRatio, 3),
-                "\n")
+    if (verbose) {
+      if (tbf) {
+        cat("\nFinished MC simulation from approximate parameter posterior\n")
+      } else {
+        cat(
+          "\nFinished MCMC simulation with acceptance ratio",
+          round(results$acceptanceRatio, 3),
+          "\n"
+        )
+      }
     }
 
     ## compute log marginal likelihood estimate (which is only defined up to a constant, so
     ## it can only be used for model ranking (?))
-    if(estimateMargLik)
-    {
-        results$logMargLik <-
-            with(cppResults,
-                 getLogMargLikEstimate(numeratorTerms=samples$margLikNumerator,
-                                       denominatorTerms=samples$margLikDenominator, 
-                                       highDensityPointLogUnPosterior=highDensityPointLogUnPosterior))
+    if (estimateMargLik) {
+      results$logMargLik <-
+        with(
+          cppResults,
+          getLogMargLikEstimate(
+            numeratorTerms = samples$margLikNumerator,
+            denominatorTerms = samples$margLikDenominator,
+            highDensityPointLogUnPosterior = highDensityPointLogUnPosterior
+          )
+        )
 
-        ## append original things
-        results$logMargLik <-
-            c(results$logMargLik,
-              list(numeratorTerms=cppResults$samples$margLikNumerator,
-                   denominatorTerms=cppResults$samples$margLikDenominator, 
-                   highDensityPointLogUnPosterior=cppResults$highDensityPointLogUnPosterior))         
+      ## append original things
+      results$logMargLik <-
+        c(
+          results$logMargLik,
+          list(
+            numeratorTerms = cppResults$samples$margLikNumerator,
+            denominatorTerms = cppResults$samples$margLikDenominator,
+            highDensityPointLogUnPosterior = cppResults$highDensityPointLogUnPosterior
+          )
+        )
     }
 
 
@@ -343,238 +368,250 @@ sampleGlm <-
 
     ## abbreviation for the coefficients sample matrix (nCoefs x nSamples)
     simCoefs <-
-        results$coefficients <- cppResults$samples$coefficients
-     
-    
+      results$coefficients <- cppResults$samples$coefficients
+
+
     ## so the number of samples is:
     nSamples <- ncol(simCoefs)
-    
+
     ## the linear predictor samples for the fitted data:
     fitted <- design %*% simCoefs
 
     # give some names
-    
+
     rownames(results$coefficients) <- colnames(design)
-    if(doGlm) rownames(results$coefficients)[1] <- "(Intercept)"
-    
+    if (doGlm) rownames(results$coefficients)[1] <- "(Intercept)"
+
     ## samples from the predictive distribution for new data,
     ## if this is required
     predictions <-
-        if(nNewObs)
-        {
-            ## get new data matrix
-            tempX <- constructNewdataMatrix(object=object,
-                                            newdata=newdata)
-            
-            ## copy old GlmBayesMfp object
-            tempObj <- object
-          
-            ## correct model matrix in tempMod to new data matrix
-            attr(tempObj, "data") <-
-                list(x=tempX,
-                     xCentered=scale(tempX, center=TRUE, scale=FALSE)) 
-           
-            if(correctedCenter==FALSE){
-              ## so we can get the design matrix
-              newDesign <- getDesignMatrix(modelConfig=config,
-                                           object=tempObj,
-                                           intercept=doGlm)
-              
-              ## so the linear predictor samples are
-              linPredSamples <- newDesign %*% simCoefs
-              
-            } else if(correctedCenter==TRUE){
-              
-              newDesignUC <- getDesignMatrix(modelConfig=config,
-                                             object=tempObj,
-                                             intercept=doGlm,
-                                             center=FALSE)
-              
-              oldDesignUC <- getDesignMatrix(modelConfig=config,
-                                             object=object,
-                                             intercept=doGlm,
-                                             center=FALSE)
-              
-              oldMeans <- colMeans(oldDesignUC)
-              
-              start <- ifelse(doGlm, 2,1) #If there is an intercept we don't want to subtract mean
-              for(k in start:length(oldMeans)){
-                newDesignUC[,k] <- newDesignUC[,k] - oldMeans[k]
-              }
-              
-              ## so the linear predictor samples are
-              linPredSamples <- newDesignUC %*% simCoefs
-            }
-            
-              linPredSamples
-            
-            
-        } else {
-            ## no prediction required.
-            ## But we return an empty matrix because that is expected
-            ## by the GlmBayesMfpSamples class!
-            matrix(nrow=0L,
-                   ncol=0L)
+      if (nNewObs) {
+        ## get new data matrix
+        tempX <- constructNewdataMatrix(
+          object = object,
+          newdata = newdata
+        )
+
+        ## copy old GlmBayesMfp object
+        tempObj <- object
+
+        ## correct model matrix in tempMod to new data matrix
+        attr(tempObj, "data") <-
+          list(
+            x = tempX,
+            xCentered = scale(tempX, center = TRUE, scale = FALSE)
+          )
+
+        if (correctedCenter == FALSE) {
+          ## so we can get the design matrix
+          newDesign <- getDesignMatrix(
+            modelConfig = config,
+            object = tempObj,
+            intercept = doGlm
+          )
+
+          ## so the linear predictor samples are
+          linPredSamples <- newDesign %*% simCoefs
+        } else if (correctedCenter == TRUE) {
+          newDesignUC <- getDesignMatrix(
+            modelConfig = config,
+            object = tempObj,
+            intercept = doGlm,
+            center = FALSE
+          )
+
+          oldDesignUC <- getDesignMatrix(
+            modelConfig = config,
+            object = object,
+            intercept = doGlm,
+            center = FALSE
+          )
+
+          oldMeans <- colMeans(oldDesignUC)
+
+          start <- ifelse(doGlm, 2, 1) # If there is an intercept we don't want to subtract mean
+          for (k in start:length(oldMeans)) {
+            newDesignUC[, k] <- newDesignUC[, k] - oldMeans[k]
+          }
+
+          ## so the linear predictor samples are
+          linPredSamples <- newDesignUC %*% simCoefs
         }
 
+        linPredSamples
+      } else {
+        ## no prediction required.
+        ## But we return an empty matrix because that is expected
+        ## by the GlmBayesMfpSamples class!
+        matrix(
+          nrow = 0L,
+          ncol = 0L
+        )
+      }
+
     ## process all coefficients samples: fixed, FP, UC in this order.
-    
+
     ## now we need the colnames of the design matrix:
-    colNames <- colnames(attr(object,"data")$x)
-    
-    
-    ## invariant: already coefCounter coefficients samples (rows of simCoefs) processed    
+    colNames <- colnames(attr(object, "data")$x)
+
+
+    ## invariant: already coefCounter coefficients samples (rows of simCoefs) processed
     coefCounter <- 0L
 
     ## the fixed covariate (and intercept samples)
-    fixCoefs <- list ()
-        
-    if(doGlm){
+    fixCoefs <- list()
+
+    if (doGlm) {
       fixName <- attrs$termNames$fixed[1]
       mat <- simCoefs[1, ,
-                      drop=FALSE]   
+        drop = FALSE
+      ]
       coefCounter <- coefCounter + 1
-      
+
       ## and also get the names
       rownames(mat) <- colNames[1]
-      
+
       ## and this is located in the list
       fixCoefs[[fixName]] <- mat
     }
-    
+
     ## start processing all fixed terms
     for (i in seq_along(fixList <- attrs$indices$fixed))
     {
       ## get the name of the fixed term
-      fixName <- attrs$termNames$fixed[i+doGlm]
-      
+      fixName <- attrs$termNames$fixed[i + doGlm]
+
       ## check if this fixed covariate is included in the model
-      if (i %in% config$fixTerms)
-      {
+      if (i %in% config$fixTerms) {
         ## then we get the corresponding samples
-        mat <- simCoefs[coefCounter +
-                          seq_len (len <- length(fixList[[i]])), ,
-                        drop=FALSE]   
-        
+        mat <- simCoefs[
+          coefCounter +
+            seq_len(len <- length(fixList[[i]])), ,
+          drop = FALSE
+        ]
+
         ## correct invariant
         coefCounter <- coefCounter + len
-        
+
         ## and also get the names
         rownames(mat) <- colNames[fixList[[i]]]
-        
+
         ## and this is located in the list
         fixCoefs[[fixName]] <- mat
       }
     }
-            
-   
+
+
     ## samples of fractional polynomial function values evaluated at grids will
     ## be elements of this list:
-    bfpCurves <- list ()                  
+    bfpCurves <- list()
     ## Note that only those bfp terms are included which also appear in the
     ## model configuration.
-    
+
     ## start processing all FP terms
-    for (i in seq_along (attrs$indices$bfp))
+    for (i in seq_along(attrs$indices$bfp))
     {
-        ## what is the name of this FP term?
-        fpName <- attrs$termNames$bfp[i]
+      ## what is the name of this FP term?
+      fpName <- attrs$termNames$bfp[i]
 
-        ## the powers for this FP term
-        p.i <- config$powers[[fpName]]
-        
-        ## if there is at least one power for this FP, we add a list element, else not.
-        if ((len <- length(p.i)) > 0)
-        {            
-            ## determine additional grid values:
-            obs <- attrs$data$x[, attrs$indices$bfp[i], drop = FALSE]
+      ## the powers for this FP term
+      p.i <- config$powers[[fpName]]
 
-            ## if there is no grid in gridList, we take an additional scaled grid using the gridSize argument
-            if (is.null(g <- gridList[[fpName]]))
-            {
-                g <- seq (from = min(obs),
-                          to = max(obs),
-                          length = gridSize)
-            }
-            
-            ## the resulting total grid is:
-            g <- union (obs, g)
-            gridSizeTotal <- length (g)
+      ## if there is at least one power for this FP, we add a list element, else not.
+      if ((len <- length(p.i)) > 0) {
+        ## determine additional grid values:
+        obs <- attrs$data$x[, attrs$indices$bfp[i], drop = FALSE]
 
-            ## sort the grid
-            g <- sort(g)
-
-            ## and rearrange as column with name (needed for getFpTransforms)
-            g <- matrix(g,
-                        nrow = gridSizeTotal,
-                        ncol = 1L,
-                        dimnames = list (NULL, fpName))
-            
-            ## the part of the design matrix corresponding to the grid
-            xMat <- getFpTransforms (g, p.i, center=TRUE)
-
-            ## multiply that with the corresponding coefficients to get the FP curve samples
-            mat <- xMat %*% simCoefs[coefCounter + seq_len (len), , drop = FALSE]
-
-            ## correct invariant
-            coefCounter <- coefCounter + len
-            
-            ## save the grid as an attribute of the samples
-            attr(mat, "scaledGrid") <- g
-            
-            ## save position of observed values
-            attr(mat, "whereObsVals") <- match(obs, g) 
-
-            ## then write into list
-            bfpCurves[[fpName]] <- mat
+        ## if there is no grid in gridList, we take an additional scaled grid using the gridSize argument
+        if (is.null(g <- gridList[[fpName]])) {
+          g <- seq(
+            from = min(obs),
+            to = max(obs),
+            length = gridSize
+          )
         }
+
+        ## the resulting total grid is:
+        g <- union(obs, g)
+        gridSizeTotal <- length(g)
+
+        ## sort the grid
+        g <- sort(g)
+
+        ## and rearrange as column with name (needed for getFpTransforms)
+        g <- matrix(g,
+          nrow = gridSizeTotal,
+          ncol = 1L,
+          dimnames = list(NULL, fpName)
+        )
+
+        ## the part of the design matrix corresponding to the grid
+        xMat <- getFpTransforms(g, p.i, center = TRUE)
+
+        ## multiply that with the corresponding coefficients to get the FP curve samples
+        mat <- xMat %*% simCoefs[coefCounter + seq_len(len), , drop = FALSE]
+
+        ## correct invariant
+        coefCounter <- coefCounter + len
+
+        ## save the grid as an attribute of the samples
+        attr(mat, "scaledGrid") <- g
+
+        ## save position of observed values
+        attr(mat, "whereObsVals") <- match(obs, g)
+
+        ## then write into list
+        bfpCurves[[fpName]] <- mat
+      }
     }
 
     ## uncertain fixed form covariates coefficients samples
     ## will be elements of this list:
-    ucCoefs <- list ()
+    ucCoefs <- list()
     ## Note that only those UC terms are included which also appear in the model
     ## configuration.
-    
+
 
     ## start processing all UC terms
     for (i in seq_along(ucList <- attrs$indices$ucList))
     {
-        ## get the name of the UC term
-        ucName <- attrs$termNames$uc[i]
+      ## get the name of the UC term
+      ucName <- attrs$termNames$uc[i]
 
-        ## check if this UC is included in the model
-        if (i %in% config$ucTerms)
-        {
-            ## then we get the corresponding samples
-            mat <- simCoefs[coefCounter +
-                            seq_len (len <- length(ucList[[i]])), ,
-                            drop=FALSE]   
+      ## check if this UC is included in the model
+      if (i %in% config$ucTerms) {
+        ## then we get the corresponding samples
+        mat <- simCoefs[
+          coefCounter +
+            seq_len(len <- length(ucList[[i]])), ,
+          drop = FALSE
+        ]
 
-            ## correct invariant
-            coefCounter <- coefCounter + len
+        ## correct invariant
+        coefCounter <- coefCounter + len
 
-            ## and also get the names
-            rownames(mat) <- colNames[ucList[[i]]]
+        ## and also get the names
+        rownames(mat) <- colNames[ucList[[i]]]
 
-            ## and this is located in the list
-            ucCoefs[[ucName]] <- mat
-        }
+        ## and this is located in the list
+        ucCoefs[[ucName]] <- mat
+      }
     }
 
     ## collect processed samples into S4 class object
     results$samples <- new("GlmBayesMfpSamples",
-                           fitted=fitted,
-                           predictions=predictions,
-                           fixCoefs=fixCoefs,
-                           z=cppResults$samples$z,
-                           bfpCurves=bfpCurves,
-                           ucCoefs=ucCoefs,
-                           shiftScaleMax=attrs$shiftScaleMax,
-                           nSamples=nSamples)
-    
+      fitted = fitted,
+      predictions = predictions,
+      fixCoefs = fixCoefs,
+      z = cppResults$samples$z,
+      bfpCurves = bfpCurves,
+      ucCoefs = ucCoefs,
+      shiftScaleMax = attrs$shiftScaleMax,
+      nSamples = nSamples
+    )
+
     ## finished post-processing.
 
     ## finally return the whole stuff.
     return(results)
-}
+  }

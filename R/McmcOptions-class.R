@@ -1,7 +1,7 @@
 #####################################################################################
 ## Author: Daniel Sabanés Bové [daniel *.* sabanesbove *a*t* gmx *.* net]
 ## Project: Bayesian FPs for GLMs
-##        
+##
 ## Time-stamp: <[McmcOptions-class.R] by DSB Mit 15/12/2010 13:57 (CET)>
 ##
 ## Description:
@@ -25,34 +25,33 @@
 ##'
 ##' @name McmcOptions-class
 ##' @keywords classes internal
-setClass(Class="McmcOptions",
-         representation=
-         representation(iterations="integer",
-                        burnin="integer",
-                        step="integer"),
-         validity=function(object){
-             if(object@burnin < 0L )
-             {
-                 return("Burn-in must be non-negative")
-             }
-             else if(object@burnin >= object@iterations)
-             {
-                 return("Burn-in must be smaller than iterations")
-             }
-             else if(object@step < 1)
-             {
-                 return("Step size must be at least 1")
-             }
-         })
- 
+setClass(
+  Class = "McmcOptions",
+  representation =
+    representation(
+      iterations = "integer",
+      burnin = "integer",
+      step = "integer"
+    ),
+  validity = function(object) {
+    if (object@burnin < 0L) {
+      return("Burn-in must be non-negative")
+    } else if (object@burnin >= object@iterations) {
+      return("Burn-in must be smaller than iterations")
+    } else if (object@step < 1) {
+      return("Step size must be at least 1")
+    }
+  }
+)
+
 ##' Constructor for class McmcOptions
 ##'
 ##' Note that the argument \code{samples} is included for convenience only -
 ##' you can specify it instead of \code{iterations}.
-##' 
+##'
 ##' @param iterations number of MCMC iterations (default: \code{110,000})
 ##' @param burnin number of burn-in iterations which are not saved (default:
-##' \code{10,000}) 
+##' \code{10,000})
 ##' @param step only every step-th iteration is saved after the burn-in
 ##' (default: \code{10})
 ##' @param samples number of resulting samples (by default \code{10,000} will result)
@@ -61,13 +60,14 @@ setClass(Class="McmcOptions",
 ##' @keywords classes
 ##' @export
 McmcOptions <-
-    function(iterations=as.integer(burnin + (step * samples)),
-             burnin=1e4L,
-             step=10L,
-             samples=1e4L)
-{
-    return(new(Class="McmcOptions",
-               iterations=iterations,
-               burnin=burnin,
-               step=step))
-}
+  function(iterations = as.integer(burnin + (step * samples)),
+           burnin = 1e4L,
+           step = 10L,
+           samples = 1e4L) {
+    return(new(
+      Class = "McmcOptions",
+      iterations = iterations,
+      burnin = burnin,
+      step = step
+    ))
+  }
