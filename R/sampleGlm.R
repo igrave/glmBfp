@@ -190,10 +190,10 @@ sampleGlm <-
     if (isNullModel && is.null(fixedZ)) {
       fixedZ <- 0
     } else if ((attrs$searchConfig$useFixedg || attrs$searchConfig$empiricalBayes) &&
-               is.null(fixedZ)) {
+      is.null(fixedZ)) {
       fixedZ <- info$zMode
     }
-  
+
     if (useFixedZ <- !is.null(fixedZ)) {
       stopifnot(
         is.numeric(fixedZ),
