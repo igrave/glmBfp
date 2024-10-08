@@ -21,7 +21,7 @@ A list with the following elements:
 \item{par}{the minimum abscissa found by the algorithm}
 \item{inv.hessian}{the inverse Hessian at \code{par}}
 \item{evaluations}{list of the function evaluation pairs: \code{args} and
-\code{vals}} 
+\code{vals}}
 }
 }
 \description{

@@ -48,8 +48,8 @@ The result is a list with the following elements:
 BMA frequencies in the sample, acceptance ratios of the MCMC
 runs and optionally marginal likelihood estimates / standard
 errors.}
-\item{samples}{an object of S4 class \code{\linkS4class{GlmBayesMfpSamples}} 
-containing the samples from the BMA.} 
+\item{samples}{an object of S4 class \code{\linkS4class{GlmBayesMfpSamples}}
+containing the samples from the BMA.}
 }
 }
 \description{
