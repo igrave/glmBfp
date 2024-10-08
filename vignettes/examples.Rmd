@@ -90,29 +90,31 @@ stochastic search.
 ```{r pima-search}
 set.seed(102)
 time.pima <-
-  system.time(models.pima <-
-    glmBayesMfp(
-      type ~
-        bfp(npreg) +
-        bfp(glu) +
-        bfp(bp) +
-        bfp(skin) +
-        bfp(bmi) +
-        bfp(ped) +
-        bfp(age),
-      data = pima,
-      family = binomial("logit"),
-      priorSpecs =
-        list(
-          gPrior = prior,
-          modelPrior = "sparse"
-        ),
-      nModels = 1e3L,
-      chainlength = 1e1L,
-      method = "sampling",
-      useOpenMP = FALSE,
-      higherOrderCorrection = TRUE
-    ))
+  system.time({
+    models.pima <-
+      glmBayesMfp(
+        type ~
+          bfp(npreg) +
+          bfp(glu) +
+          bfp(bp) +
+          bfp(skin) +
+          bfp(bmi) +
+          bfp(ped) +
+          bfp(age),
+        data = pima,
+        family = binomial("logit"),
+        priorSpecs =
+          list(
+            gPrior = prior,
+            modelPrior = "sparse"
+          ),
+        nModels = 1e3L,
+        chainlength = 1e1L,
+        method = "sampling",
+        useOpenMP = FALSE,
+        higherOrderCorrection = TRUE
+      )
+  })
 time.pima
 attr(models.pima, "numVisited")
 ``` 

@@ -14,7 +14,7 @@
 #####################################################################################
 
 ##' @include posteriors.R
-{}
+NULL
 
 ##' Extract method for GlmBayesMfp objects
 ##'
@@ -102,11 +102,9 @@ as.data.frame.GlmBayesMfp <- function(x,
                                       freq = FALSE) {
   ## posterior probabilities:
   ret <- data.frame(
-    posterior =
-      posteriors(x, type = "normalized")
+    posterior = posteriors(x, type = "normalized")
   )
-  if (!is.null(attr(x, "searchConfig")$chainlength) &&
-    freq) {
+  if (!is.null(attr(x, "searchConfig")$chainlength) && freq) {
     ret$frequency <- posteriors(x, type = "sampling")
   }
 
@@ -123,36 +121,25 @@ as.data.frame.GlmBayesMfp <- function(x,
   ret$logPrior <- logPriors(x)
 
   ## fixed form covariates:
-  for (i in seq_along(fixNames <- attr(x, "termNames")$fixed[-1]))
-  {
+  for (i in seq_along(fixNames <- attr(x, "termNames")$fixed[-1])) {
     ret[[fixNames[i]]] <- sapply(
       x,
-      function(one) {
-        i %in% one$configuration$fixTerms
-      }
+      function(one) i %in% one$configuration$fixTerms
     )
   }
 
   ## uncertain fixed form covariates:
-  for (i in seq_along(ucNames <- attr(x, "termNames")$uc))
-  {
+  for (i in seq_along(ucNames <- attr(x, "termNames")$uc)) {
     ret[[ucNames[i]]] <- sapply(
       x,
-      function(one) {
-        i %in% one$configuration$ucTerms
-      }
+      function(one) i %in% one$configuration$ucTerms
     )
   }
   ## fractional polynomial:
-  for (fpName in attr(x, "termNames")$bfp)
-  {
+  for (fpName in attr(x, "termNames")$bfp) {
     ret[[fpName]] <- sapply(
       x,
-      function(one) {
-        paste(one$configuration$powers[[fpName]],
-          collapse = ", "
-        )
-      }
+      function(one) paste(one$configuration$powers[[fpName]], collapse = ", ")
     )
   }
 

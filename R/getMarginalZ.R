@@ -306,8 +306,7 @@ getMarginalZ <- function(info,
   )
 
   ## then try the possible methods in this order
-  for (m in methodsSequence)
-  {
+  for (m in methodsSequence) {
     ## get the unnormalized pdf
     unnormZdens <- eval(possibleMethods[[m]])
 
@@ -393,8 +392,7 @@ getGenerator <- function(method,
     ## first calculate the cdf points
     cdf <- numeric(nPoints)
     cdf[1L] <- 0
-    for (i in 2:nPoints)
-    {
+    for (i in 2:nPoints) {
       cdf[i] <- cdf[i - 1] +
         (y[i] + y[i - 1]) / 2 * (z[i] - z[i - 1])
     }

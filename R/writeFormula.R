@@ -8,8 +8,7 @@
 ## History:
 ## 14/07/2015 Copied from CoxTBFs project functions-funsel-2.bma.R
 #####################################################################################
-
-{}
+NULL
 
 ##' Construct a survival formula based on a glmBfp object with censInd not null.
 ##'
@@ -40,7 +39,7 @@ writeFormula <- function(models.listpart, time.var, status.var) {
     # extract powers for terms which should have transformations
     powers <- models.listpart[[1]]$configuration$powers
     bfp.trans <- vector("character")
-    for (i in 1:length(powers)) {
+    for (i in seq_along(powers)) {
       this.term <- ""
       if (length(powers[[i]]) > 0) {
         this.name <- names(powers[i])

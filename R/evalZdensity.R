@@ -24,7 +24,7 @@
 #####################################################################################
 
 ##' @include helpers.R
-{}
+NULL
 
 ##' Evaluate the (negative log) unnormalized marginal z density in a given
 ##' model.

@@ -30,10 +30,7 @@
                    pow) {
   ## checks
   stopifnot(
-    identical(
-      length(pow),
-      1L
-    ),
+    identical(length(pow), 1L),
     is.numeric(x),
     is.numeric(pow)
   )
@@ -41,8 +38,7 @@
   ## transformation
   if (pow != 0) {
     x^pow
-  } else ## pow == 0
-  {
+  } else { ## pow == 0
     log(x)
   }
 }
@@ -72,14 +68,9 @@ getFpTransforms <- function(vec,
 
     ## create name
     if (pow != 0) {
-      paste(name, pow,
-        sep = "^"
-      )
-    } else ## pow == 0
-    {
-      paste("log(", name, ")",
-        sep = ""
-      )
+      paste(name, pow, sep = "^")
+    } else { ## pow == 0
+      paste0("log(", name, ")")
     }
   }
 
@@ -105,8 +96,7 @@ getFpTransforms <- function(vec,
   numRepPow <- 0L
 
   ## invariant: about to write ith column
-  for (i in seq_along(powers))
-  {
+  for (i in seq_along(powers)) {
     ## extract this power into "pi",
     ## check if it is the same as the last power and (afterwards) if we are *not* at the first power.
     if ((pi <- powers[i]) == lastPow && i != 1L) {

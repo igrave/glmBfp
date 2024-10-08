@@ -55,7 +55,7 @@ predict.TBFcox <- function(object, newdata, times, ...) {
 
   oldMeans <- colMeans(oldDesignUC)
 
-  for (i in 1:length(oldMeans)) {
+  for (i in seq_along(oldMeans)) {
     newDesignUC[, i] <- newDesignUC[, i] - oldMeans[i]
   }
 
@@ -129,7 +129,7 @@ predict.TBFcox.sep <- function(object, newdata, times, ...) {
 
   oldMeans <- colMeans(oldDesignUC)
 
-  for (i in 1:length(oldMeans)) {
+  for (i in seq_along(oldMeans)) {
     newDesignUC[, i] <- newDesignUC[, i] - oldMeans[i]
   }
 
@@ -184,7 +184,7 @@ predict.TBFcox.BMA <- function(object, newdata, times, ...) {
   # This can probably be made faster since I think some of the matrices are identical
 
   print("Making Model Matrices")
-  for (i in 1:length(object$model.object)) {
+  for (i in seq_along(object$model.object)) {
     # From sampleGlm.R from glmBfp packages by Sabanes Bove
     obj <- object$model.object[i]
     config <- obj[[1]]$configuration
@@ -233,7 +233,7 @@ predict.TBFcox.BMA <- function(object, newdata, times, ...) {
   print("Making Big Matrix")
   # Populate Big.Matrix
   for (i in 1:t) {
-    tm <- max((1:length(time))[time <= times[i] + 1e-06])
+    tm <- max((seq_along(time))[time <= times[i] + 1e-06])
     Big.Matrix[, i] <- object$survfit[, tm]
     if (times[i] > max(time) + 1e-06) {
       Big.Matrix[, i] <- NA

@@ -16,7 +16,7 @@
 #####################################################################################
 
 ##' @include hpds.R
-{}
+NULL
 
 ##' Function for plotting a fractional polynomial curve estimate
 ##'

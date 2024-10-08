@@ -40,8 +40,7 @@ start <- 0
 par(mfrow = n2mfrow(length(funs)))
 
 ## now process all functions
-for (f in funs)
-{
+for (f in funs) {
   plot(xgrid, f(xgrid), type = "l")
 
   cat(

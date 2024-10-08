@@ -15,7 +15,7 @@
 #####################################################################################
 
 ##' @include helpers.R
-{}
+NULL
 
 
 ##' Test the Cox model computation for the TBF approach

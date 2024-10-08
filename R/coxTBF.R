@@ -41,16 +41,30 @@ NULL
 ##'
 ##' @import stats
 ##' @export
-
-coxTBF <- function(formula, data, type = "MAP", baseline = "shrunk", globalEB = FALSE, IC = FALSE, sep = FALSE, keepModelList = FALSE, ..., overrideConfig) {
+coxTBF <- function(formula,
+                   data,
+                   type = "MAP",
+                   baseline = "shrunk",
+                   globalEB = FALSE,
+                   IC = FALSE,
+                   sep = FALSE,
+                   keepModelList = FALSE,
+                   ...,
+                   overrideConfig) {
   formula <- as.formula(formula)
 
   LHS <- formula[[2]][[2]]
   RHS <- paste(attr(terms(formula), "term.labels"), collapse = " + ")
   selection.formula <- formula(paste(LHS, "~", RHS))
 
-  tryCatch(type <- match.arg(type, c("MAP", "MPM", "BMA", "BMAfull")), error = function(e) stop(paste("Invalid value for type: ", type)))
-  tryCatch(baseline <- match.arg(baseline, c("cox", "shrunk")), error = function(e) stop("Invalid baseline specification"))
+  tryCatch(
+    type <- match.arg(type, c("MAP", "MPM", "BMA", "BMAfull")),
+    error = function(e) stop(paste("Invalid value for type: ", type))
+  )
+  tryCatch(
+    baseline <- match.arg(baseline, c("cox", "shrunk")),
+    error = function(e) stop("Invalid baseline specification")
+  )
 
   time.var <- as.character(formula[[2]][[2]])
   status.var <- as.character(formula[[2]][[3]])
@@ -136,7 +150,7 @@ coxTBF <- function(formula, data, type = "MAP", baseline = "shrunk", globalEB = 
   }
 
   # If we are doing AIC/BIC we need to fit models, calculate IC values and new probabilities.
-  if (IC != FALSE & type != "BMAfull") {
+  if (IC != FALSE && type != "BMAfull") {
     IC.values <- numeric(length(models))
     nullModel <- NA
 
@@ -153,7 +167,7 @@ coxTBF <- function(formula, data, type = "MAP", baseline = "shrunk", globalEB = 
 
 
 
-    for (j in 1:length(models)) {
+    for (j in seq_along(models)) {
       # new.design.matrix <- getDesignMatrix(object=models[j])[,-1,drop=FALSE]
       #
       # new.data <- data.frame(cbind(status.var=attributes(models[j])$data$censInd,
@@ -167,7 +181,10 @@ coxTBF <- function(formula, data, type = "MAP", baseline = "shrunk", globalEB = 
 
 
 
-      model.formula <- paste("survival::Surv(", time.var, ",", status.var, ")~1", paste(c(" ", design.names[ind]), collapse = " + "))
+      model.formula <- paste(
+        "survival::Surv(", time.var, ",", status.var, ")~1",
+        paste(c(" ", design.names[ind]), collapse = " + ")
+      )
 
       model.cph <- rms::cph(formula(model.formula), data = new.data, surv = FALSE, se.fit = FALSE, y = FALSE, x = FALSE)
 
@@ -179,7 +196,7 @@ coxTBF <- function(formula, data, type = "MAP", baseline = "shrunk", globalEB = 
       if (IC == "BIC") IC.values[j] <- -AIC(model.cph, k = log(sum(new.data[status.var]))) / 2
 
       # save this model so we can delete it
-      if (is.na(IC.values[j]) | length(models[[j]]$configuration$ucTerms) == 0) {
+      if (is.na(IC.values[j]) || length(models[[j]]$configuration$ucTerms) == 0) {
         nullModel <- j
       }
     }
@@ -226,7 +243,7 @@ coxTBF <- function(formula, data, type = "MAP", baseline = "shrunk", globalEB = 
     mpm.vars <- attr(models, "inclusionProbs") > 0.5
     # which model includes only these?
     model.df <- as.data.frame(models)[, -c(1:3)]
-    mpm.index <- which(sapply(1:length(models), function(i) all(model.df[i, ] == mpm.vars)))
+    mpm.index <- which(sapply(seq_along(models), function(i) all(model.df[i, ] == mpm.vars)))
     if (!any(mpm.index)) {
       # if the mpm wasn't fitted we must construct it
       print("MPM model wasn't fitted so we construct it.")
@@ -249,15 +266,14 @@ coxTBF <- function(formula, data, type = "MAP", baseline = "shrunk", globalEB = 
 
 
     models[which(sapply(
-      1:length(models),
+      seq_along(models),
       function(i) length(models[i][[1]]$configuration$ucTerms)
     ) == 0)] <- NULL
 
     # if we are doing AIC or BIC we need to calculate (and store) the values separately
     if (IC != FALSE) IC.values <- numeric(length(models))
 
-    for (j in 1:length(models)) {
-      #    foreach(j = 1:length(models)) %dopar% {
+    for (j in seq_along(models)) {
       new.design.matrix <- getDesignMatrix(object = models[j], intercept = FALSE)
 
       new.data <- data.frame(cbind(
@@ -274,7 +290,14 @@ coxTBF <- function(formula, data, type = "MAP", baseline = "shrunk", globalEB = 
         mcmc = McmcOptions(burnin = 0L, step = 1L, samples = 100)
       )
       # print(colnames(new.data))
-      model.cph <- rms::cph(formula(model.formula), data = new.data, surv = TRUE, se.fit = FALSE, y = TRUE, x = TRUE)
+      model.cph <- rms::cph(
+        formula(model.formula),
+        data = new.data,
+        surv = TRUE,
+        se.fit = FALSE,
+        y = TRUE,
+        x = TRUE
+      )
       if (j == 1) surv.time <- model.cph$time
 
       if (baseline == "cox") {
@@ -282,7 +305,9 @@ coxTBF <- function(formula, data, type = "MAP", baseline = "shrunk", globalEB = 
 
         shrunk.survfit <- survival::survfit(model.cph)
         shrunk.surv <- c(1, shrunk.survfit$surv)
-        if (length(shrunk.surv) < length(model.cph$surv)) shrunk.surv <- c(shrunk.surv, shrunk.surv[length(shrunk.surv)])
+        if (length(shrunk.surv) < length(model.cph$surv)) {
+          shrunk.surv <- c(shrunk.surv, shrunk.surv[length(shrunk.surv)])
+        }
         bma.survfits[[j]] <- shrunk.surv
       }
 
@@ -310,7 +335,9 @@ coxTBF <- function(formula, data, type = "MAP", baseline = "shrunk", globalEB = 
 
 
         shrunk.surv <- c(1, shrunk.survfit$surv)
-        if (length(shrunk.surv) < length(model.cph$surv)) shrunk.surv <- c(shrunk.surv, shrunk.surv[length(shrunk.surv)])
+        if (length(shrunk.surv) < length(model.cph$surv)) {
+          shrunk.surv <- c(shrunk.surv, shrunk.surv[length(shrunk.surv)])
+        }
         shrunk.cph$surv <- shrunk.surv
 
         bma.surv[[j]] <- rms::Survival(shrunk.cph)
@@ -400,7 +427,14 @@ coxTBF <- function(formula, data, type = "MAP", baseline = "shrunk", globalEB = 
     colnames(new.data)[1:2] <- c(status.var, time.var)
     model.formula <- paste("survival::Surv(", time.var, ",", status.var, ")~.")
 
-    model.cph <- rms::cph(formula(model.formula), data = new.data, surv = TRUE, se.fit = FALSE, y = TRUE, x = TRUE)
+    model.cph <- rms::cph(
+      formula(model.formula),
+      data = new.data,
+      surv = TRUE,
+      se.fit = FALSE,
+      y = TRUE,
+      x = TRUE
+    )
 
     if (baseline == "cox") {
       bma.surv <- rms::Survival(model.cph)
@@ -414,7 +448,9 @@ coxTBF <- function(formula, data, type = "MAP", baseline = "shrunk", globalEB = 
       shrunk.cph$linear.predictors <- shrunk.mm %*% bma.coefs
       shrunk.survfit <- survival::survfit(shrunk.cph)
       shrunk.surv <- c(1, shrunk.survfit$surv)
-      if (length(shrunk.surv) < length(model.cph$surv)) shrunk.surv <- c(shrunk.surv, shrunk.surv[length(shrunk.surv)])
+      if (length(shrunk.surv) < length(model.cph$surv)) {
+        shrunk.surv <- c(shrunk.surv, shrunk.surv[length(shrunk.surv)])
+      }
       shrunk.cph$surv <- shrunk.surv
 
       bma.surv <- rms::Survival(shrunk.cph)
@@ -426,7 +462,12 @@ coxTBF <- function(formula, data, type = "MAP", baseline = "shrunk", globalEB = 
     ret <- list()
 
     # ret$formula <- writeFormula(models[1], time.var, status.var) #model.formula
-    ret$formula <- formula(paste("survival::Surv(", time.var, ",", status.var, ") ~", paste(paste(names(sbma$samples@ucCoefs)), collapse = " + ")))
+    ret$formula <- formula(
+      paste(
+        "survival::Surv(", time.var, ",", status.var, ") ~",
+        paste(paste(names(sbma$samples@ucCoefs)), collapse = " + ")
+      )
+    )
     ret$coefs <- bma.coefs
     ret$data <- data
     ret$call <- this.call
@@ -460,7 +501,14 @@ coxTBF <- function(formula, data, type = "MAP", baseline = "shrunk", globalEB = 
         setdiff(colnames(new.data), c(time.var, status.var)),
         response = paste("survival::Surv(", time.var, ",", status.var, ")")
       )
-      model.cph <- rms::cph(formula(model.formula), data = new.data, surv = TRUE, se.fit = FALSE, y = TRUE, x = TRUE)
+      model.cph <- rms::cph(
+        formula(model.formula),
+        data = new.data,
+        surv = TRUE,
+        se.fit = FALSE,
+        y = TRUE,
+        x = TRUE
+      )
 
       ret <- list()
 
@@ -480,7 +528,9 @@ coxTBF <- function(formula, data, type = "MAP", baseline = "shrunk", globalEB = 
         shrunk.cph$linear.predictors <- shrunk.mm %*% model.coefs
         shrunk.survfit <- survival::survfit(shrunk.cph)
         shrunk.surv <- c(1, shrunk.survfit$surv)
-        if (length(shrunk.surv) < length(model.cph$surv)) shrunk.surv <- c(shrunk.surv, shrunk.surv[length(shrunk.surv)])
+        if (length(shrunk.surv) < length(model.cph$surv)) {
+          shrunk.surv <- c(shrunk.surv, shrunk.surv[length(shrunk.surv)])
+        }
         shrunk.cph$surv <- shrunk.surv
 
         ret$survival <- rms::Survival(shrunk.cph)
@@ -499,7 +549,14 @@ coxTBF <- function(formula, data, type = "MAP", baseline = "shrunk", globalEB = 
         setdiff(colnames(new.data), c(time.var, status.var)),
         response = paste("survival::Surv(", time.var, ",", status.var, ")")
       )
-      model.cph <- rms::cph(formula(model.formula), data = new.data, surv = TRUE, se.fit = FALSE, y = TRUE, x = TRUE)
+      model.cph <- rms::cph(
+        formula(model.formula),
+        data = new.data,
+        surv = TRUE,
+        se.fit = FALSE,
+        y = TRUE,
+        x = TRUE
+      )
 
       ret <- list()
 
@@ -520,17 +577,19 @@ coxTBF <- function(formula, data, type = "MAP", baseline = "shrunk", globalEB = 
         shrunk.cph <- model.cph
         shrunk.mm <- new.design.matrix # model.matrix(model.formula, data=data)[,-1]
 
-        for (k in 1:length(model.coefs)) {
+        for (k in seq_along(model.coefs)) {
           shrunk.cph$linear.predictors <- shrunk.mm %*% model.coefs[[k]]
           shrunk.survfit <- survival::survfit(shrunk.cph)
           shrunk.surv <- c(1, shrunk.survfit$surv)
-          if (length(shrunk.surv) < length(model.cph$surv)) shrunk.surv <- c(shrunk.surv, shrunk.surv[length(shrunk.surv)])
+          if (length(shrunk.surv) < length(model.cph$surv)) {
+            shrunk.surv <- c(shrunk.surv, shrunk.surv[length(shrunk.surv)])
+          }
           shrunk.cph$surv <- shrunk.surv
 
           ret$survival[[k]] <- rms::Survival(shrunk.cph)
         }
       } else if (baseline == "cox") {
-        for (k in 1:length(model.coefs)) {
+        for (k in seq_along(model.coefs)) {
           ret$survival[[k]] <- rms::Survival(model.cph)
         }
       }

@@ -29,7 +29,7 @@
 ##' @include McmcOptions-class.R
 ##' @include McmcOptions-methods.R
 ##' @include sampleGlm.R
-{}
+NULL
 
 ##' Produce posterior samples from a Bayesian model average over GLMs / Cox
 ##' models
@@ -177,15 +177,13 @@ sampleBma <-
 
     ## draw model names
     modelFreqs <-
-      if (identical(
-        length(objNames),
-        1L
-      )) # if there is only one model ...
-        {
-          rep(objNames, nSamples)
-        } else # else more than one model ...
-      {
-        sample(objNames,
+      if (identical(length(objNames), 1L)) {
+        # if there is only one model ...
+        rep(objNames, nSamples)
+      } else {
+        # else more than one model ...
+        sample(
+          objNames,
           size = nSamples,
           replace = TRUE,
           prob = postProbs
@@ -220,8 +218,7 @@ sampleBma <-
     ## and save samples from it
 
     ## process every model in object
-    for (j in seq_along(object))
-    {
+    for (j in seq_along(object)) {
       if (verbose) {
         cat("\nNow at model ", j, "...")
       }
@@ -315,8 +312,7 @@ sampleBma <-
         )
 
         ## save all fixed coefs samples
-        for (fixName in names(thisOut$samples@fixCoefs))
-        {
+        for (fixName in names(thisOut$samples@fixCoefs)) {
           ## get these samples
           thisFixSamples <- thisOut$samples@fixCoefs[[fixName]]
 
@@ -338,8 +334,7 @@ sampleBma <-
         )
 
         ## save all bfp curve samples
-        for (bfpName in names(thisOut$samples@bfpCurves))
-        {
+        for (bfpName in names(thisOut$samples@bfpCurves)) {
           ## get these samples
           thisBfpSamples <- thisOut$samples@bfpCurves[[bfpName]]
 
@@ -359,8 +354,7 @@ sampleBma <-
         }
 
         ## save all uc coefs samples
-        for (ucName in names(thisOut$samples@ucCoefs))
-        {
+        for (ucName in names(thisOut$samples@ucCoefs)) {
           ## get these samples
           thisUcSamples <- thisOut$samples@ucCoefs[[ucName]]
 
@@ -389,7 +383,8 @@ sampleBma <-
     ret <- list(
       modelData = modelData,
       samples =
-        new("GlmBayesMfpSamples",
+        new(
+          "GlmBayesMfpSamples",
           fitted = fitted,
           predictions = predictions,
           fixCoefs = fixCoefs,

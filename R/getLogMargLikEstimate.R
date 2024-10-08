@@ -88,14 +88,12 @@ getLogMargLikEstimate <- function(numeratorTerms,
       ncol = 2L
     )
 
-    for (l in seq_len(B - lag))
-    {
+    for (l in seq_len(B - lag)) {
       ret <- ret + tcrossprod(
         hDiffHat[, tailIndex[l]],
         hDiffHat[, headIndex[l]]
       ) / B
     }
-
     return(ret)
   }
 
@@ -103,8 +101,7 @@ getLogMargLikEstimate <- function(numeratorTerms,
   covMat <- getOmega(0L) / B
 
   ## then add other terms
-  for (s in seq_len(endLag))
-  {
+  for (s in seq_len(endLag)) {
     thisOmega <- getOmega(s)
     covMat <- covMat + (1 - s / (endLag + 1)) * (thisOmega + t(thisOmega)) / B
   }

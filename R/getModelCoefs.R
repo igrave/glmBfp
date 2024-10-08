@@ -11,7 +11,7 @@
 
 ##' @include sampleBma.R
 ##' @include getDesignMatrix.R
-{}
+NULL
 
 ##' Estimate shrunken coefficients from GlmBayesMfp object for Cox model
 ##'
@@ -46,7 +46,7 @@ getModelCoefs <- function(model.listpart, mcmc, sep = FALSE, ...) {
 
 
   #  print("break!")
-  all.coefs <- lapply(1:ncol(model.bma$samples@fitted), function(i) {
+  all.coefs <- lapply(seq_len(ncol(model.bma$samples@fitted)), function(i) {
     if (sum(is.na(model.bma$samples@fitted[, i])) > 0) {
       print("This iteration from sampleBMA didn't work, return NA!")
       return(rep(NA, length(model.bma$samples@fitted[, i])))

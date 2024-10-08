@@ -47,7 +47,7 @@
 ##' @include GlmBayesMfpSamples-class.R
 ##' @include getMarginalZ.R
 ##' @include getLogMargLikEstimate.R
-{}
+NULL
 
 ##' Produce posterior samples from one GLM / Cox model
 ##'
@@ -183,22 +183,17 @@ sampleGlm <-
     ## check if the model is the null model
     isNullModel <- identical(
       modelDim,
-      ifelse(doGlm,
-        1L,
-        0L
-      )
+      ifelse(doGlm, 1L, 0L)
     )
 
     ## check / modify the fixedZ option
-    if (isNullModel &&
-      is.null(fixedZ)) {
+    if (isNullModel && is.null(fixedZ)) {
       fixedZ <- 0
-    } else if ((attrs$searchConfig$useFixedg ||
-      attrs$searchConfig$empiricalBayes) &&
-      is.null(fixedZ)) {
+    } else if ((attrs$searchConfig$useFixedg || attrs$searchConfig$empiricalBayes) &&
+               is.null(fixedZ)) {
       fixedZ <- info$zMode
     }
-
+  
     if (useFixedZ <- !is.null(fixedZ)) {
       stopifnot(
         is.numeric(fixedZ),
@@ -243,31 +238,25 @@ sampleGlm <-
           b <- gPrior@b + info$residualDeviance / 2
 
           list(
-            logDens =
-              function(z) {
-                logNormConst <-
-                  ifelse(b > 0,
-                    a * log(b) - pgamma(b, a, log.p = TRUE) - lgamma(a),
-                    log(a)
-                  )
-                logNormConst - (a + 1) * log1p(exp(z)) -
-                  b / (1 + exp(z)) + z
-              },
-            gen =
-              function(n = 1) {
-                p <- runif(n = n)
+            logDens = function(z) {
+              logNormConst <- ifelse(
+                b > 0,
+                a * log(b) - pgamma(b, a, log.p = TRUE) - lgamma(a),
+                log(a)
+              )
+              logNormConst - (a + 1) * log1p(exp(z)) - b / (1 + exp(z)) + z
+            },
+            gen = function(n = 1) {
+              p <- runif(n = n)
 
-                ret <-
-                  if (b > 0) {
-                    b / qgamma(
-                      p = (1 - p) * pgamma(b, a),
-                      shape = a
-                    ) - 1
-                  } else {
-                    (1 - p)^(-1 / a) - 1
-                  }
-                return(ret)
-              }
+              ret <-
+                if (b > 0) {
+                  b / qgamma(p = (1 - p) * pgamma(b, a), shape = a) - 1
+                } else {
+                  (1 - p)^(-1 / a) - 1
+                }
+              return(ret)
+            }
           )
         } else {
           ## the usual way:
@@ -320,8 +309,8 @@ sampleGlm <-
     results$acceptanceRatio <-
       if (tbf) {
         1
-      } ## we do Monte Carlo in the TBF case!
-      else {
+      } else {
+        ## we do Monte Carlo in the TBF case!
         cppResults$nAccepted / mcmc@iterations
       }
 
@@ -476,8 +465,7 @@ sampleGlm <-
     }
 
     ## start processing all fixed terms
-    for (i in seq_along(fixList <- attrs$indices$fixed))
-    {
+    for (i in seq_along(fixList <- attrs$indices$fixed)) {
       ## get the name of the fixed term
       fixName <- attrs$termNames$fixed[i + doGlm]
 
@@ -509,8 +497,7 @@ sampleGlm <-
     ## model configuration.
 
     ## start processing all FP terms
-    for (i in seq_along(attrs$indices$bfp))
-    {
+    for (i in seq_along(attrs$indices$bfp)) {
       ## what is the name of this FP term?
       fpName <- attrs$termNames$bfp[i]
 
@@ -573,8 +560,7 @@ sampleGlm <-
 
 
     ## start processing all UC terms
-    for (i in seq_along(ucList <- attrs$indices$ucList))
-    {
+    for (i in seq_along(ucList <- attrs$indices$ucList)) {
       ## get the name of the UC term
       ucName <- attrs$termNames$uc[i]
 

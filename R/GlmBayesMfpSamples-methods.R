@@ -37,45 +37,42 @@ setMethod("[",
   ),
   def = function(x, i) {
     x@fitted <- x@fitted[, i, drop = FALSE]
-    
+
     if (length(x@predictions)) {
       x@predictions <- x@predictions[, i, drop = FALSE]
     }
-    
+
     fixCoefs <- x@fixCoefs
-    for (p in names(fixCoefs))
-    {
+    for (p in names(fixCoefs)) {
       fixCoefs[[p]] <- fixCoefs[[p]][, i, drop = FALSE]
     }
     x@fixCoefs <- fixCoefs
-    
-    
+
+
     x@z <- x@z[i]
-    
+
     bfpCurves <- x@bfpCurves
-    for (p in names(bfpCurves))
-    {
+    for (p in names(bfpCurves)) {
       ## save attributes
       sg <- attr(bfpCurves[[p]], "scaledGrid")
       wov <- attr(bfpCurves[[p]], "whereObsVals")
-      
+
       bfpCurves[[p]] <- bfpCurves[[p]][, i, drop = FALSE]
-      
+
       ## get back the attributes
       attr(bfpCurves[[p]], "scaledGrid") <- sg
       attr(bfpCurves[[p]], "whereObsVals") <- wov
     }
     x@bfpCurves <- bfpCurves
-    
+
     ucCoefs <- x@ucCoefs
-    for (p in names(ucCoefs))
-    {
+    for (p in names(ucCoefs)) {
       ucCoefs[[p]] <- ucCoefs[[p]][, i, drop = FALSE]
     }
     x@ucCoefs <- ucCoefs
-    
+
     x@nSamples <- length(x@fixCoefs[[1]])
-    
+
     return(x)
   }
 )

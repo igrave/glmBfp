@@ -14,7 +14,7 @@
 
 ##' @include helpers.R
 ##' @include getFpTransforms.R
-{}
+NULL
 
 ##' Construct the design matrix for a given bfp GLM model
 ##'

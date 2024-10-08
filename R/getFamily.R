@@ -64,8 +64,10 @@ getFamily <- function(family,
   ## check that family has correct form
   stopifnot(
     inherits(family, "family"),
-    all(c("family", "link", "linkfun", "linkinv", "variance", "mu.eta", "dev.resids")
-    %in% names(family))
+    all(
+      c("family", "link", "linkfun", "linkinv", "variance", "mu.eta", "dev.resids") %in%
+        names(family)
+    )
   )
 
   ## check here if family and link are supported.
@@ -144,8 +146,8 @@ getFamily <- function(family,
   ## binomial()$initialize
   family$init <- function(y, # the response vector or matrix
                           weights, # the weights vector
-                          nobs = length(weights)) # number of observations
-  {
+                          nobs = length(weights)) { # number of observations
+
     ## create dummy variables which are sometimes needed in the
     ## initializer expression
     etastart <- start <- mustart <- NULL

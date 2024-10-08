@@ -20,6 +20,5 @@
 ##' @keywords internal
 ##' @author Daniel Sabanes Bove \email{daniel.sabanesbove@@ifspm.uzh.ch}
 is.bool <- function(x) {
-  return(identical(length(x), 1L) &&
-    is.logical(x))
+  return(identical(length(x), 1L) && is.logical(x))
 }

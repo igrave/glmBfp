@@ -54,6 +54,6 @@ bfp <- function(x,
 ##' @export
 ##' @rdname formula
 `uc` <- function(x) {
-    x <- deparse(substitute(x))
-    x
-  }
+  x <- deparse(substitute(x))
+  x
+}
