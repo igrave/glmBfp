@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="coxTBF" timestamp="2024-10-10T21:52:02Z" hostname="3cbe5e4920e2" tests="7" skipped="0" failures="0" errors="1" time="6.395">
+    <testcase time="1.438" classname="coxTBF" name="coxTBF_works_with_uc_terms"/>
+    <testcase time="1.465" classname="coxTBF" name="coxTBF_works_with_bfp_terms"/>
+    <testcase time="0.458" classname="coxTBF" name="coxTBF_works_with_globalEB"/>
+    <testcase time="0.404" classname="coxTBF" name="coxTBF_works_with_BIC"/>
+    <testcase time="0.856" classname="coxTBF" name="coxTBF_works_with_type_BMA">
+      <error type="error" message="Error in `rms::cph(formula(model.formula), data = new.data, surv = TRUE,  ('test-coxTBF.R:80:3')">Error in `rms::cph(formula(model.formula), data = new.data, surv = TRUE, 
+    se.fit = FALSE, y = TRUE, x = TRUE)`: object 'n' not found
+Backtrace:
+    x
+ 1. +-base::suppressWarnings(...) at test-coxTBF.R:80:3
+ 2. | \-base::withCallingHandlers(...)
+ 3. \-glmBfp::coxTBF(...)
+ 4.   \-rms::cph(...)</error>
+    </testcase>
+    <testcase time="1.057" classname="coxTBF" name="coxTBF_works_with_type_MPM"/>
+    <testcase time="0.717" classname="coxTBF" name="coxTBF_works_with_type_MAP"/>
+  </testsuite>
+  <testsuite name="glmBayesMfp" timestamp="2024-10-10T21:52:08Z" hostname="3cbe5e4920e2" tests="8" skipped="0" failures="0" errors="0" time="1.082">
+    <testcase time="0.0270000000000001" classname="glmBayesMfp" name="glmBayesMfp_works_with_bfp"/>
+    <testcase time="0.52" classname="glmBayesMfp" name="glmBayesMfp_works_with_bfp"/>
+    <testcase time="0.00199999999999978" classname="glmBayesMfp" name="glmBayesMfp_works_with_bfp"/>
+    <testcase time="0.00400000000000045" classname="glmBayesMfp" name="glmBayesMfp_works_with_bfp"/>
+    <testcase time="0.0119999999999996" classname="glmBayesMfp" name="glmBayesMfp_works_with_marginal_likelihood"/>
+    <testcase time="0.51" classname="glmBayesMfp" name="glmBayesMfp_works_with_marginal_likelihood"/>
+    <testcase time="0.00300000000000011" classname="glmBayesMfp" name="glmBayesMfp_works_with_marginal_likelihood"/>
+    <testcase time="0.00399999999999956" classname="glmBayesMfp" name="glmBayesMfp_works_with_marginal_likelihood"/>
+  </testsuite>
+  <testsuite name="optimization" timestamp="2024-10-10T21:52:09Z" hostname="3cbe5e4920e2" tests="4" skipped="0" failures="0" errors="0" time="0.053">
+    <testcase time="0.0440000000000005" classname="optimization" name="optimization_routines_work_correctly"/>
+    <testcase time="0.00300000000000011" classname="optimization" name="optimization_routines_work_correctly"/>
+    <testcase time="0.00300000000000011" classname="optimization" name="optimization_routines_work_correctly"/>
+    <testcase time="0.00300000000000011" classname="optimization" name="optimization_routines_work_correctly"/>
+  </testsuite>
+  <testsuite name="predictCoxTBF" timestamp="2024-10-10T21:52:09Z" hostname="3cbe5e4920e2" tests="3" skipped="0" failures="0" errors="1" time="1.088">
+    <testcase time="0.708" classname="predictCoxTBF" name="coxTBF_works_with_uc_terms"/>
+    <testcase time="0.359" classname="predictCoxTBF" name="predict_works_with_coxTBF_with_sep_TRUE"/>
+    <testcase time="0.020999999999999" classname="predictCoxTBF" name="predict.TBFcox.BMA_works">
+      <error type="error" message="Error in `rms::cph(formula(model.formula), data = new.data, surv = TRUE,  ('test-predictCoxTBF.R:59:3')">Error in `rms::cph(formula(model.formula), data = new.data, surv = TRUE, 
+    se.fit = FALSE, y = TRUE, x = TRUE)`: object 'n' not found
+Backtrace:
+    x
+ 1. +-base::suppressWarnings(...) at test-predictCoxTBF.R:59:3
+ 2. | \-base::withCallingHandlers(...)
+ 3. \-glmBfp::coxTBF(...)
+ 4.   \-rms::cph(...)</error>
+    </testcase>
+  </testsuite>
+  <testsuite name="sampleGlm" timestamp="2024-10-10T21:52:10Z" hostname="3cbe5e4920e2" tests="4" skipped="0" failures="0" errors="0" time="0.742">
+    <testcase time="0.0390000000000015" classname="sampleGlm" name="sampleGlm_works_with_default_arguments"/>
+    <testcase time="0.696" classname="sampleGlm" name="sampleGlm_works_with_default_arguments"/>
+    <testcase time="0.00399999999999956" classname="sampleGlm" name="sampleGlm_works_with_default_arguments"/>
+    <testcase time="0.00300000000000011" classname="sampleGlm" name="sampleGlm_works_with_default_arguments"/>
+  </testsuite>
+</testsuites>
