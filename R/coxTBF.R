@@ -11,7 +11,7 @@
 
 ##' @include helpers.R
 ##' @include getDesignMatrix.R
-{}
+NULL
 
 
 ##' Fit Cox models using glmBayesMfp
@@ -260,7 +260,10 @@ coxTBF <- function(formula, data, type="MAP", baseline='shrunk', globalEB=FALSE,
                                    new.design.matrix))
       
       colnames(new.data)[1:2] <- c(status.var,time.var)
-      model.formula <- paste("survival::Surv(",time.var,",",status.var,")~.")
+      model.formula <- reformulate(
+        setdiff(colnames(new.data), c(time.var, status.var)),
+        response = paste("survival::Surv(", time.var, ",", status.var, ")")
+      )
       
       #calculate values for each model
       bma.coefs[[j]] <- getModelCoefs(models[j], 
@@ -362,7 +365,6 @@ coxTBF <- function(formula, data, type="MAP", baseline='shrunk', globalEB=FALSE,
     } else {
       sbma <- sampleBma(models)
     }
-    print("1")
     
     #     uc.included <- which(unlist(lapply(sbma$samples@ucCoefs, function(x) is.numeric(mean(x)))))
     uc.included <- which(apply(as.data.frame(models)[,-c(1:3)],2,any))
@@ -395,8 +397,12 @@ coxTBF <- function(formula, data, type="MAP", baseline='shrunk', globalEB=FALSE,
                                  time.var=attributes(fake.model)$data$y,
                                  new.design.matrix))
     
-    colnames(new.data)[1:2] <- c(status.var,time.var)
-    model.formula <- paste("survival::Surv(",time.var,",",status.var,")~.")
+    colnames(new.data)[1:2] <- c(status.var, time.var)
+
+    model.formula <- reformulate(
+      setdiff(colnames(new.data), c(time.var, status.var)),
+      response = paste("survival::Surv(", time.var, ",", status.var, ")")
+    )
     
     model.cph <- rms::cph(formula(model.formula), data=new.data, surv=TRUE, se.fit = FALSE, y=TRUE, x=TRUE)
     
@@ -447,7 +453,10 @@ coxTBF <- function(formula, data, type="MAP", baseline='shrunk', globalEB=FALSE,
                                  new.design.matrix))
     
     colnames(new.data)[1:2] <- c(status.var,time.var)
-    model.formula <- paste("survival::Surv(",time.var,",",status.var,")~.")
+    model.formula <- reformulate(
+      setdiff(colnames(new.data), c(time.var, status.var)),
+      response = paste("survival::Surv(", time.var, ",", status.var, ")")
+    )
     
     #Do the original shortcut way, using E(beta) in the exp.
     if(sep==FALSE){

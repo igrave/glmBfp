@@ -6,7 +6,8 @@ Imports:
     methods,
     coda,
     Runuran (>= 0.12),
-    Rcpp (>= 0.11.6)
+    Rcpp (>= 0.11.6),
+    checkmate
 License: GPL (>= 2)
 Title: Bayesian Fractional Polynomials for GLMs
 LinkingTo: Rcpp, RcppArmadillo
@@ -29,7 +30,8 @@ Encoding: UTF-8
 Suggests:
     MASS,
     rmarkdown,
-    knitr
+    knitr,
+    testthat (>= 3.0.0)
 VignetteBuilder: knitr
 Collate:
     'GPrior-classes.R'
@@ -68,3 +70,4 @@ Collate:
     'uncenteredDesignMatrix.R'
     'writeFormula.R'
 RoxygenNote: 7.3.2
+Config/testthat/edition: 3
