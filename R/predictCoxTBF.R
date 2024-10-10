@@ -11,7 +11,7 @@
 #' @return A data frame of survival probabilities with rows for each row of newdata and columns for each time.
 #' @export
 #'
-predict.TBFcox <- function(object, newdata = object$data, times, ...){
+predict.TBFcox <- function(object, newdata = object$data, times, ...) {
   # print("predictSurvProb TBF.Cox")
   # print(paste("Train N =",nrow(attr(object$model.object,"data")$x),
   #             ". Predict N = ", nrow(newdata)))
