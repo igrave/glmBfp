@@ -4,12 +4,12 @@
 \alias{predict.TBFcox}
 \title{Prediction methods for CoxTBF objects}
 \usage{
-\method{predict}{TBFcox}(object, newdata, times, ...)
+\method{predict}{TBFcox}(object, newdata = object$data, times, ...)
 }
 \arguments{
 \item{object}{a model fitted with \code{\link{coxTBF}}}
 
-\item{newdata}{a dataframe with the same variables as the original data used to fit the object}
+\item{newdata}{a data frame with the same variables as the original data used to fit the object}
 
 \item{times}{a vector of times to predict survival probability for}
 
