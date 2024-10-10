@@ -280,7 +280,7 @@ coxTBF <- function(formula,
       ))
 
       colnames(new.data)[1:2] <- c(status.var, time.var)
-      
+
       model.formula <- reformulate(
         setdiff(colnames(new.data), c(time.var, status.var)),
         response = paste("survival::Surv(", time.var, ",", status.var, ")")
@@ -425,7 +425,7 @@ coxTBF <- function(formula,
     ))
 
     colnames(new.data)[1:2] <- c(status.var, time.var)
-    
+
     model.formula <- reformulate(
       setdiff(colnames(new.data), c(time.var, status.var)),
       response = paste("survival::Surv(", time.var, ",", status.var, ")")
@@ -496,7 +496,7 @@ coxTBF <- function(formula,
     ))
 
     colnames(new.data)[1:2] <- c(status.var, time.var)
-    
+
     model.formula <- reformulate(
       setdiff(colnames(new.data), c(time.var, status.var)),
       response = paste("survival::Surv(", time.var, ",", status.var, ")")
