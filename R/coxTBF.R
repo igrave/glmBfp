@@ -180,10 +180,9 @@ coxTBF <- function(formula,
       ind <- unlist(attr(models, "indices")$ucList[models[[j]]$configuration$ucTerms])
 
 
-
-      model.formula <- paste(
-        "survival::Surv(", time.var, ",", status.var, ")~1",
-        paste(c(" ", design.names[ind]), collapse = " + ")
+      model.formula <- reformulate(
+        setdiff(colnames(new.data), c(time.var, status.var)),
+        response = paste("survival::Surv(", time.var, ",", status.var, ")")
       )
 
       model.cph <- rms::cph(formula(model.formula), data = new.data, surv = FALSE, se.fit = FALSE, y = FALSE, x = FALSE)
@@ -281,7 +280,11 @@ coxTBF <- function(formula,
       ))
 
       colnames(new.data)[1:2] <- c(status.var, time.var)
-      model.formula <- paste("survival::Surv(", time.var, ",", status.var, ")~.")
+      
+      model.formula <- reformulate(
+        setdiff(colnames(new.data), c(time.var, status.var)),
+        response = paste("survival::Surv(", time.var, ",", status.var, ")")
+      )
 
       # calculate values for each model
       bma.coefs[[j]] <- getModelCoefs(models[j],
@@ -422,7 +425,11 @@ coxTBF <- function(formula,
     ))
 
     colnames(new.data)[1:2] <- c(status.var, time.var)
-    model.formula <- paste("survival::Surv(", time.var, ",", status.var, ")~.")
+    
+    model.formula <- reformulate(
+      setdiff(colnames(new.data), c(time.var, status.var)),
+      response = paste("survival::Surv(", time.var, ",", status.var, ")")
+    )
 
     model.cph <- rms::cph(
       formula(model.formula),
@@ -489,7 +496,11 @@ coxTBF <- function(formula,
     ))
 
     colnames(new.data)[1:2] <- c(status.var, time.var)
-    model.formula <- paste("survival::Surv(", time.var, ",", status.var, ")~.")
+    
+    model.formula <- reformulate(
+      setdiff(colnames(new.data), c(time.var, status.var)),
+      response = paste("survival::Surv(", time.var, ",", status.var, ")")
+    )
 
     # Do the original shortcut way, using E(beta) in the exp.
     if (sep == FALSE) {
