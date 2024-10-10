@@ -4,15 +4,14 @@
 #' required by \code{pec} package.
 #'
 #' @param object a model fitted with \code{\link{coxTBF}}
-#' @param newdata a dataframe with the same variables as the original data used to fit the object
+#' @param newdata a data frame with the same variables as the original data used to fit the object
 #' @param times a vector of times to predict survival probability for
 #' @param ... not used.
 #'
 #' @return A data frame of survival probabilities with rows for each row of newdata and columns for each time.
 #' @export
 #'
-#'
-predict.TBFcox <- function(object, newdata, times, ...) {
+predict.TBFcox <- function(object, newdata = object$data, times, ...){
   # print("predictSurvProb TBF.Cox")
   # print(paste("Train N =",nrow(attr(object$model.object,"data")$x),
   #             ". Predict N = ", nrow(newdata)))

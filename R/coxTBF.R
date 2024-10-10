@@ -263,8 +263,6 @@ coxTBF <- function(formula,
     bma.survfits <- list()
     surv.time <- numeric()
 
-
-
     models[which(sapply(
       seq_along(models),
       function(i) length(models[i][[1]]$configuration$ucTerms)
@@ -389,7 +387,6 @@ coxTBF <- function(formula,
     } else {
       sbma <- sampleBma(models)
     }
-    print("1")
 
     #     uc.included <- which(unlist(lapply(sbma$samples@ucCoefs, function(x) is.numeric(mean(x)))))
     uc.included <- which(apply(as.data.frame(models)[, -c(1:3)], 2, any))
