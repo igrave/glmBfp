@@ -8,11 +8,11 @@ test_that("coxTBF works with uc terms", {
       data = dat,
     )
   )
-  
+
   expect_equal(
     result$coefs,
     c(
-      celltypesmallcell = 0.682195527580969, celltypeadeno = 1.10579342810208, 
+      celltypesmallcell = 0.682195527580969, celltypeadeno = 1.10579342810208,
       celltypelarge = 0.314212090584748, karno = -0.0295046132201781
     )
   )
@@ -29,7 +29,7 @@ test_that("coxTBF works with bfp terms", {
       data = dat,
     )
   )
-  
+
   expect_equal(result$coefs, c("karno^1" = -3.2772937))
 })
 
@@ -44,11 +44,11 @@ test_that("coxTBF works with globalEB", {
       globalEB = TRUE
     )
   )
-  
+
   expect_equal(
     result$coefs,
     c(
-      celltypesmallcell = 0.649233020541543, celltypeadeno = 1.04989976693073, 
+      celltypesmallcell = 0.649233020541543, celltypeadeno = 1.04989976693073,
       celltypelarge = 0.297255116709026, karno = -0.0281576412870105
     )
   )
@@ -65,7 +65,7 @@ test_that("coxTBF works with BIC", {
       IC = "BIC"
     )
   )
-  
+
   expect_equal(
     result$coefs,
     c(karno = -0.0333985449212696)
@@ -86,13 +86,15 @@ test_that("coxTBF works with type BMA", {
       nModels = 100
     )
   )
-  
+
   expect_equal(
     result$coefs,
-    c(age = -0.00202419478319447, celltypesmallcell = 0.668781469573777, 
-      celltypeadeno = 1.01530341497844, celltypelarge = 0.306546076175885, 
-      diagtime = 0.000448314201362383, karno = -0.0296825412852211, 
-      prior = 0.00192812445037288, trt = 0.0979056973859562)
+    c(
+      age = -0.00202419478319447, celltypesmallcell = 0.668781469573777,
+      celltypeadeno = 1.01530341497844, celltypelarge = 0.306546076175885,
+      diagtime = 0.000448314201362383, karno = -0.0296825412852211,
+      prior = 0.00192812445037288, trt = 0.0979056973859562
+    )
   )
 })
 
@@ -109,12 +111,12 @@ test_that("coxTBF works with type MPM", {
       nModels = 100
     )
   )
-  
+
   expect_equal(
     result$coefs,
     c(
-      celltypesmallcell = 0.682195527580969, 
-      celltypeadeno = 1.10579342810208, 
+      celltypesmallcell = 0.682195527580969,
+      celltypeadeno = 1.10579342810208,
       celltypelarge = 0.314212090584748,
       karno = -0.0295046132201782
     )
@@ -135,12 +137,12 @@ test_that("coxTBF works with type MAP", {
       nModels = 100
     )
   )
-  
+
   expect_equal(
     result$coefs,
     c(
-      celltypesmallcell = 0.682195527580969, 
-      celltypeadeno = 1.10579342810208, 
+      celltypesmallcell = 0.682195527580969,
+      celltypeadeno = 1.10579342810208,
       celltypelarge = 0.314212090584748,
       karno = -0.0295046132201782
     )

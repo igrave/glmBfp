@@ -1,7 +1,7 @@
 #####################################################################################
 ## Author: Daniel Sabanés Bové [daniel *.* sabanesbove *a*t* ifspm *.* uzh *.* ch]
 ## Project: Bayesian fractional polynomials for GLMs
-##        
+##
 ## Time-stamp: <[optimize.R] by DSB Die 25/05/2010 16:20 (CEST)>
 ##
 ## Description:
@@ -33,26 +33,27 @@
 ##' \item{par}{the minimum abscissa found by the algorithm}
 ##' \item{inv.hessian}{the inverse Hessian at \code{par}}
 ##' \item{evaluations}{list of the function evaluation pairs: \code{args} and
-##' \code{vals}} 
+##' \code{vals}}
 ##' \item{code}{the convergence code. 0 is \dQuote{OK}, -1 is \dQuote{lost
 ##' precision}, and +1 is \dQuote{change not large enough}}
 ##' }
-##' 
+##'
 ##' @keywords utilities internal
 ##' @author Daniel Sabanes Bove \email{daniel.sabanesbove@@ifspm.uzh.ch}
-cppBfgs <- function(x0,                    
-                          f_,                    
-                          min.x=c(-Inf),         
-                          max.x=c(+Inf),         
-                          prec=1e-5,             
-                          verbose=FALSE)         
-{
-    return(cpp_bfgs( as.double(x0),
-                     f_,
-                     as.double(min.x),
-                     as.double(max.x),
-                     as.double(prec),
-                     verbose))
+cppBfgs <- function(x0,
+                    f_,
+                    min.x = c(-Inf),
+                    max.x = c(+Inf),
+                    prec = 1e-5,
+                    verbose = FALSE) {
+  return(cpp_bfgs(
+    as.double(x0),
+    f_,
+    as.double(min.x),
+    as.double(max.x),
+    as.double(prec),
+    verbose
+  ))
 }
 
 
@@ -68,20 +69,19 @@ cppBfgs <- function(x0,
 ##' \item{par}{the minimum abscissa found by the algorithm}
 ##' \item{inv.hessian}{the inverse Hessian at \code{par}}
 ##' \item{evaluations}{list of the function evaluation pairs: \code{args} and
-##' \code{vals}} 
+##' \code{vals}}
 ##' }
-##' 
+##'
 ##' @keywords utilities internal
 ##' @author Daniel Sabanes Bove \email{daniel.sabanesbove@@ifspm.uzh.ch}
-cppOptimize <- function(f_,          
-                        min.x,       
-                        max.x,       
-                        prec=.Machine$double.eps^0.25) 
-{
-  return(cpp_optimize(f_,
-                      as.double(min.x),
-                      as.double(max.x),
-                      as.double(prec)))
+cppOptimize <- function(f_,
+                        min.x,
+                        max.x,
+                        prec = .Machine$double.eps^0.25) {
+  return(cpp_optimize(
+    f_,
+    as.double(min.x),
+    as.double(max.x),
+    as.double(prec)
+  ))
 }
-
-

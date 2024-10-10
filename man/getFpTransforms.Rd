@@ -17,7 +17,7 @@ getFpTransforms(vec, powers, center = TRUE)
 the FP transforms matrix with proper colnames.
 }
 \description{
-Get the (centered) FP transforms matrix of a given covariate vector, when the corresponding 
+Get the (centered) FP transforms matrix of a given covariate vector, when the corresponding
 power vector (with at least one element) is provided.
 }
 \keyword{internal}

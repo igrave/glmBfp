@@ -15,7 +15,7 @@ getLogMargLikEstimate(
 \item{numeratorTerms}{terms for the sum in the numerator of the posterior density ordinate
 estimate at the high density point}
 
-\item{denominatorTerms}{terms for the sum in the denominator of the posterior density ordinate 
+\item{denominatorTerms}{terms for the sum in the denominator of the posterior density ordinate
 estimate at the high density point}
 
 \item{highDensityPointLogUnPosterior}{log unnormalized posterior (i.e. likelihood times prior)

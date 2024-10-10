@@ -24,7 +24,7 @@ and the burn-in and thinning parameters applied to each model (see above).
 If TBF is used, each sample is accepted, and the number of samples is given
 by \code{\link{sampleSize}}(\code{mcmc}).}
 
-\item{postProbs}{vector of posterior probabilites (will be normalized within
+\item{postProbs}{vector of posterior probabilities (will be normalized within
 the function) for the weighting of the models in \code{object} (defaults to
 the normalized posterior probabilities)}
 
@@ -48,8 +48,8 @@ The result is a list with the following elements:
 BMA frequencies in the sample, acceptance ratios of the MCMC
 runs and optionally marginal likelihood estimates / standard
 errors.}
-\item{samples}{an object of S4 class \code{\linkS4class{GlmBayesMfpSamples}} 
-containing the samples from the BMA.} 
+\item{samples}{an object of S4 class \code{\linkS4class{GlmBayesMfpSamples}}
+containing the samples from the BMA.}
 }
 }
 \description{

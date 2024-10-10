@@ -8,7 +8,7 @@ HypergPrior(a = 4)
 }
 \arguments{
 \item{a}{the hyperparameter which must be larger than 3, and should not be larger than 4
-in order not to favour too much shrinkage a priori (default: 4)}
+in order not to favor too much shrinkage a priori (default: 4)}
 }
 \value{
 a new \code{\linkS4class{HypergPrior}} object

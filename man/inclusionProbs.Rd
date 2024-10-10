@@ -2,7 +2,7 @@
 % Please edit documentation in R/inclusionProbs.R
 \name{inclusionProbs}
 \alias{inclusionProbs}
-\title{Compute posterior inclusion probabilites based on GlmBayesMfp object}
+\title{Compute posterior inclusion probabilities based on GlmBayesMfp object}
 \usage{
 inclusionProbs(
   GlmBayesMfpObject,
@@ -19,7 +19,7 @@ the normalized probabilities in \code{GlmBayesMfpObject}}
 the resulting inclusion probabilities vector
 }
 \description{
-Compute (model averaged) posterior inclusion probabilites for the uncertain
+Compute (model averaged) posterior inclusion probabilities for the uncertain
 variables (including FP variables) based on a GlmBayesMfp object.
 }
 \keyword{utilities}

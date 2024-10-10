@@ -1,7 +1,7 @@
 #####################################################################################
 ## Author: Daniel Sabanes Bove [daniel *.* sabanesbove *a*t* ifspm *.* uzh *.* ch]
 ## Project: Bayesian FPs for GLMs
-## 
+##
 ## Time-stamp: <[plotCurveEstimate.R] by DSB Mit 23/01/2013 18:14 (CET)>
 ##
 ## Description:
@@ -16,12 +16,12 @@
 #####################################################################################
 
 ##' @include hpds.R
-{}
+NULL
 
 ##' Function for plotting a fractional polynomial curve estimate
 ##'
 ##' Plot a fractional polynomial curve estimate using samples from a single
-##' GLM / Cox model or a model average. 
+##' GLM / Cox model or a model average.
 ##'
 ##' @param samples an object of class \code{\linkS4class{GlmBayesMfpSamples}},
 ##' produced by \code{\link{sampleGlm}} and \code{\link{sampleBma}}.
@@ -56,142 +56,151 @@
 ##' \item{transform}{vector of shift and scale parameter}
 ##'
 ##' @keywords regression
-##' 
+##'
 ##' @importFrom graphics abline curve matplot par
 ##' @importFrom methods is
-##' 
+##'
 ##' @export
 plotCurveEstimate <-
-    function (samples,                    
-              termName,                 
-              plevel = 0.95,            
-              slevel = plevel,          
-              plot = TRUE,              
-              rug=FALSE,
-              addZeros=FALSE,
-              ...)
-{
+  function(samples,
+           termName,
+           plevel = 0.95,
+           slevel = plevel,
+           plot = TRUE,
+           rug = FALSE,
+           addZeros = FALSE,
+           ...) {
     ## check class of "samples"
     stopifnot(is(samples, "GlmBayesMfpSamples"))
 
     ## extract samples and its attributes (they might be overwritten by cbind
-    ## below) 
+    ## below)
     mat <- samples@bfpCurves[[termName]]
     attrs <- attributes(mat)
-    
+
     ## check that there are samples for this covariate
-    if (is.null(mat))
-        stop ("There were no samples which include ", termName, " in this model sample!\n")   
+    if (is.null(mat)) {
+      stop("There were no samples which include ", termName, " in this model sample!\n")
+    }
     ## add zeros? todo: this should also work if no samples include this covariate!
-    if(addZeros)
-    {
-        mat <- cbind(mat,
-                     matrix(data=0,
-                            nrow=nrow(mat),
-                            ncol=(samples@nSamples - ncol(mat))))
-    }    
-    
+    if (addZeros) {
+      mat <- cbind(
+        mat,
+        matrix(
+          data = 0,
+          nrow = nrow(mat),
+          ncol = (samples@nSamples - ncol(mat))
+        )
+      )
+    }
+
     ## start return list
-    ret <- list ()
+    ret <- list()
 
     ## x values
-    ret$grid <- g <- as.vector (attrs$scaledGrid)
-    tr <- samples@shiftScaleMax[termName, c ("shift", "scale")]
+    ret$grid <- g <- as.vector(attrs$scaledGrid)
+    tr <- samples@shiftScaleMax[termName, c("shift", "scale")]
     ret$original <- g * tr[2] - tr[1]
 
     ## compute pwise data
-    ret$mean <- rowMeans(mat, na.rm=TRUE)
+    ret$mean <- rowMeans(mat, na.rm = TRUE)
 
-    if (! is.null(plevel))
-    {
-        plowerUpper <- apply(mat, 1, empiricalHpd, level = plevel)
-        ret$plower <- plowerUpper[1, ]
-        ret$pupper <- plowerUpper[2, ]
+    if (!is.null(plevel)) {
+      plowerUpper <- apply(mat, 1, empiricalHpd, level = plevel)
+      ret$plower <- plowerUpper[1, ]
+      ret$pupper <- plowerUpper[2, ]
     }
 
     ## simultaneous credible band around the mean
-    if (! is.null(slevel))
-    {
-        bandData <- scrHpd(mat, level = slevel, mode = ret$mean)
-        ret$slower <- bandData[, "lower"]
-        ret$supper <- bandData[, "upper"]
+    if (!is.null(slevel)) {
+      bandData <- scrHpd(mat, level = slevel, mode = ret$mean)
+      ret$slower <- bandData[, "lower"]
+      ret$supper <- bandData[, "upper"]
     }
 
     ## todo: add generalized partial residuals?
-    
+
     ## ## partial residuals, attention because of possible ties between observed grid values in data!
     ## resids <- residuals (model)
-    
+
     pos <- attrs$whereObsVals
 
     ## partialResids <- ret$mean[pos] + resids
     partialResids <- NULL
-    
-    if (plot){
-        ## determine plotting arguments for matlines
-        matplotList <- list (...)
-        if (is.null (matplotList$xlab))
-            matplotList$xlab <- termName
-        if (is.null (matplotList$ylab)){
-            front <- paste ("Average partial predictor g(", termName, ")", sep = "")
-            if (any (tr != c (0, 1))){
-                middle <- " after the transform "
-                back <-
-                    if (tr[1] != 0){
-                        if (tr[2] != 1)
-                            paste(termName, "%<-% (", termName, " + ", tr[1], ") %/% ", tr[2])
-                        else
-                            paste(termName, "%<-%", termName, " + ", tr[1])
-                    } else {
-                        paste(termName, "%<-%", termName, "%/%", tr[2])
-                    }
-                annotation <- substitute (expression (paste (f, m, b)),
-                                          list (f = front,
-                                                m = middle,
-                                                b = parse (text = back)[[1]]))
+
+    if (plot) {
+      ## determine plotting arguments for matlines
+      matplotList <- list(...)
+      if (is.null(matplotList$xlab)) {
+        matplotList$xlab <- termName
+      }
+      if (is.null(matplotList$ylab)) {
+        front <- paste("Average partial predictor g(", termName, ")", sep = "")
+        if (any(tr != c(0, 1))) {
+          middle <- " after the transform "
+          back <-
+            if (tr[1] != 0) {
+              if (tr[2] != 1) {
+                paste(termName, "%<-% (", termName, " + ", tr[1], ") %/% ", tr[2])
+              } else {
+                paste(termName, "%<-%", termName, " + ", tr[1])
+              }
             } else {
-                annotation <- front
+              paste(termName, "%<-%", termName, "%/%", tr[2])
             }
-            matplotList$ylab <- eval (annotation)
+          annotation <- substitute(
+            expression(paste(f, m, b)),
+            list(
+              f = front,
+              m = middle,
+              b = parse(text = back)[[1]]
+            )
+          )
+        } else {
+          annotation <- front
         }
-        if (is.null (matplotList$lty))
-            matplotList$lty <- 1
-        if (is.null (matplotList$col))
-            matplotList$col <- c ("black", "blue", "blue", "green", "green")
-        if (is.null (matplotList$type))
-            matplotList$type <- "l"
-        matplotList$x <- ret$original
-        matplotList$y <- as.data.frame(ret[- match(c("original", "grid"), names(ret))])
-        
-        if (is.null (matplotList$ylim))
-            matplotList$ylim <- range (c (partialResids, matplotList$y))
+        matplotList$ylab <- eval(annotation)
+      }
+      if (is.null(matplotList$lty)) {
+        matplotList$lty <- 1
+      }
+      if (is.null(matplotList$col)) {
+        matplotList$col <- c("black", "blue", "blue", "green", "green")
+      }
+      if (is.null(matplotList$type)) {
+        matplotList$type <- "l"
+      }
+      matplotList$x <- ret$original
+      matplotList$y <- as.data.frame(ret[-match(c("original", "grid"), names(ret))])
 
-        ## and plot:
+      if (is.null(matplotList$ylim)) {
+        matplotList$ylim <- range(c(partialResids, matplotList$y))
+      }
 
-        ## first the points
-        ret$obsVals <- ret$original[pos]
-        ret$partialResids <- partialResids
-        ## plot(ret$obsVals, ret$partialResids,
-        ##      type="p",
-        ##      xlab=matplotList$xlab,
-        ##      ylab=matplotList$ylab,
-        ##      ylim=matplotList$ylim,
-        ##      cex = 0.5,
-        ##      col = "gray")
-       
-        ## then the curves, so that they are not over painted over by points
-        ## matplotList$add <- TRUE
-        do.call (matplot, matplotList)
+      ## and plot:
 
-        ## possibly the rug
-        rug <- as.logical(rug)
-        if(isTRUE(rug))
-        {
-            rug (jitter (ret$obsVals), col = "gray")
-        }
+      ## first the points
+      ret$obsVals <- ret$original[pos]
+      ret$partialResids <- partialResids
+      ## plot(ret$obsVals, ret$partialResids,
+      ##      type="p",
+      ##      xlab=matplotList$xlab,
+      ##      ylab=matplotList$ylab,
+      ##      ylim=matplotList$ylim,
+      ##      cex = 0.5,
+      ##      col = "gray")
 
+      ## then the curves, so that they are not over painted over by points
+      ## matplotList$add <- TRUE
+      do.call(matplot, matplotList)
+
+      ## possibly the rug
+      rug <- as.logical(rug)
+      if (isTRUE(rug)) {
+        rug(jitter(ret$obsVals), col = "gray")
+      }
     }
     ret$transform <- tr
 
-    invisible (ret)
-}
+    invisible(ret)
+  }

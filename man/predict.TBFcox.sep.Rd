@@ -19,6 +19,6 @@
 A data frame of survival probabilities with rows for each row of newdata and columns for each time.
 }
 \description{
-Predicts survival probabilities at given times. Compatible with predictSurvProb functions 
+Predicts survival probabilities at given times. Compatible with predictSurvProb functions
 required by \code{pec} package. Predicts objects with fitted with \code{sep=TRUE}
 }

@@ -22,7 +22,7 @@ getMarginalZ(
 by a \dQuote{monotonic} spline. The density is smoothed out to zero at the
 tails. Since the spline might be slightly negative for extreme values, the positive part
 is returned.}
-\item{logspline}{The saved points of the log unnormalized density approximation are joined 
+\item{logspline}{The saved points of the log unnormalized density approximation are joined
 by a \dQuote{monotonic} spline, which is then exponentiated.}
 \item{normalspline}{A \dQuote{monotonic} spline is fitted to the differences of the saved
 log density values and the log normal approximation. The resulting spline function is
@@ -38,7 +38,7 @@ approximation always \dQuote{works} (but may give bad results).
 \item{plot}{produce plots of the different approximation steps? (not default)}
 }
 \value{
-a list with the log of the normalized density approximation (\dQuote{logDens}) and 
+a list with the log of the normalized density approximation (\dQuote{logDens}) and
 the random number generator (\dQuote{gen}).
 }
 \description{
