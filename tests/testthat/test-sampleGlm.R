@@ -11,14 +11,8 @@ test_that("sampleGlm works with default arguments", {
 
   set.seed(102)
   object <- glmBayesMfp(
-    type ~
-      bfp(npreg) +
-      bfp(glu) +
-      bfp(bp) +
-      bfp(skin) +
-      bfp(bmi) +
-      bfp(ped) +
-      bfp(age),
+    type ~ bfp(npreg) + bfp(glu) + bfp(bp) +
+      bfp(skin) + bfp(bmi) + bfp(ped) + bfp(age),
     data = pima,
     family = binomial("logit"),
     priorSpecs = list(gPrior = prior, modelPrior = "sparse"),

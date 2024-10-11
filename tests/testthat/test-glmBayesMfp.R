@@ -11,14 +11,8 @@ test_that("glmBayesMfp works with bfp", {
 
   set.seed(102)
   models.pima <- glmBayesMfp(
-    type ~
-      bfp(npreg) +
-      bfp(glu) +
-      bfp(bp) +
-      bfp(skin) +
-      bfp(bmi) +
-      bfp(ped) +
-      bfp(age),
+    type ~ bfp(npreg) + bfp(glu) + bfp(bp) + bfp(skin) +
+      bfp(bmi) + bfp(ped) + bfp(age),
     data = pima,
     family = binomial("logit"),
     priorSpecs = list(gPrior = prior, modelPrior = "sparse"),
@@ -55,14 +49,8 @@ test_that("glmBayesMfp works with marginal likelihood", {
 
   set.seed(102)
   models.pima <- glmBayesMfp(
-    type ~
-      bfp(npreg) +
-      bfp(glu) +
-      bfp(bp) +
-      bfp(skin) +
-      bfp(bmi) +
-      bfp(ped) +
-      bfp(age),
+    type ~ bfp(npreg) + bfp(glu) + bfp(bp) +
+      bfp(skin) + bfp(bmi) + bfp(ped) + bfp(age),
     data = pima,
     family = binomial("logit"),
     priorSpecs = list(gPrior = prior, modelPrior = "sparse"),

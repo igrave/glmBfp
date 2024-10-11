@@ -187,11 +187,12 @@ sampleGlm <-
     )
 
     ## check / modify the fixedZ option
-    if (isNullModel && is.null(fixedZ)) {
-      fixedZ <- 0
-    } else if ((attrs$searchConfig$useFixedg || attrs$searchConfig$empiricalBayes) &&
-      is.null(fixedZ)) {
-      fixedZ <- info$zMode
+    if (is.null(fixedZ)) {
+      if (isNullModel) {
+        fixedZ <- 0
+      } else if (attrs$searchConfig$useFixedg || attrs$searchConfig$empiricalBayes) {
+        fixedZ <- info$zMode
+      }
     }
 
     if (useFixedZ <- !is.null(fixedZ)) {
@@ -201,7 +202,6 @@ sampleGlm <-
         identical(length(fixedZ), 1L)
       )
     } else {
-      ## give some value to fixedZ for the C++ code side...
       fixedZ <- 0
     }
 
