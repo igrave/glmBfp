@@ -36,5 +36,6 @@
 #' @importFrom methods setClass setOldClass setGeneric setMethod representation
 #' signature prototype initialize new
 #' @importFrom Runuran pinv.new ur "unuran.packed<-" unuran.details
+#' @import checkmate
 #' @keywords internal
 "_PACKAGE"
