@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE coverage SYSTEM "https://raw.githubusercontent.com/cobertura/cobertura/master/cobertura/src/site/htdocs/xml/coverage-04.dtd">
-<coverage line-rate="0.721023987099375" branch-rate="0" lines-covered="3577" lines-valid="4961" branches-covered="0" branches-valid="0" complexity="0" version="3.6.4" timestamp="2024-10-10 22:19:08.360453">
+<coverage line-rate="0.721023987099375" branch-rate="0" lines-covered="3577" lines-valid="4961" branches-covered="0" branches-valid="0" complexity="0" version="3.6.4" timestamp="2024-10-11 20:49:08.691726">
   <sources>
     <source>/__w/glmBfp/glmBfp/glmBfp</source>
   </sources>
@@ -4234,16 +4234,16 @@
                 <line number="186" hits="41" branch="false"/>
                 <line number="187" hits="41" branch="false"/>
                 <line number="190" hits="41" branch="false"/>
-                <line number="191" hits="0" branch="false"/>
-                <line number="192" hits="41" branch="false"/>
+                <line number="191" hits="41" branch="false"/>
+                <line number="192" hits="0" branch="false"/>
                 <line number="193" hits="41" branch="false"/>
                 <line number="194" hits="3" branch="false"/>
-                <line number="197" hits="41" branch="false"/>
-                <line number="198" hits="3" branch="false"/>
+                <line number="198" hits="41" branch="false"/>
                 <line number="199" hits="3" branch="false"/>
                 <line number="200" hits="3" branch="false"/>
                 <line number="201" hits="3" branch="false"/>
                 <line number="202" hits="3" branch="false"/>
+                <line number="203" hits="3" branch="false"/>
                 <line number="205" hits="38" branch="false"/>
                 <line number="209" hits="41" branch="false"/>
                 <line number="210" hits="41" branch="false"/>
@@ -4505,16 +4505,16 @@
             <line number="186" hits="41" branch="false"/>
             <line number="187" hits="41" branch="false"/>
             <line number="190" hits="41" branch="false"/>
-            <line number="191" hits="0" branch="false"/>
-            <line number="192" hits="41" branch="false"/>
+            <line number="191" hits="41" branch="false"/>
+            <line number="192" hits="0" branch="false"/>
             <line number="193" hits="41" branch="false"/>
             <line number="194" hits="3" branch="false"/>
-            <line number="197" hits="41" branch="false"/>
-            <line number="198" hits="3" branch="false"/>
+            <line number="198" hits="41" branch="false"/>
             <line number="199" hits="3" branch="false"/>
             <line number="200" hits="3" branch="false"/>
             <line number="201" hits="3" branch="false"/>
             <line number="202" hits="3" branch="false"/>
+            <line number="203" hits="3" branch="false"/>
             <line number="205" hits="38" branch="false"/>
             <line number="209" hits="41" branch="false"/>
             <line number="210" hits="41" branch="false"/>
