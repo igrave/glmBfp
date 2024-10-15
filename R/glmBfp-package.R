@@ -1,7 +1,7 @@
 #####################################################################################
 ## Author: Daniel Sabanés Bové [daniel *.* sabanesbove *a*t* ifspm *.* uzh *.* ch]
-## Project: 
-##        
+## Project:
+##
 ## Time-stamp: <[glmBfp-package.R] by DSB Mon 03/12/2012 18:19 (CET)>
 ##
 ## Description:
@@ -21,16 +21,21 @@
 #####################################################################################
 
 #' Bayesian inference for fractional polynomial models from the GLM and Cox
-#' family 
-#' @references 
+#' family
+#' @references
 #' \itemize{
-#'  \item Leonhard Held, Daniel Sabanés Bové, and Isaac Gravestock. "Approximate Bayesian model selection with the deviance statistic." Statistical Science (2015): 242-257.
-#'  \item Leonhard Held, Isaac Gravestock, and Daniel Sabanés Bové. "Objective Bayesian model selection for Cox regression." Statistics in Medicine 35.29 (2016): 5376-5390.
-#' }  
+#'  \item Leonhard Held, Daniel Sabanés Bové, and Isaac Gravestock.
+#'  "Approximate Bayesian model selection with the deviance statistic."
+#'  Statistical Science (2015): 242-257.
+#'  \item Leonhard Held, Isaac Gravestock, and Daniel Sabanés Bové.
+#'  "Objective Bayesian model selection for Cox regression."
+#'  Statistics in Medicine 35.29 (2016): 5376-5390.
+#' }
 #' @useDynLib glmBfp, .registration=TRUE
 #' @importFrom graphics plot hist
 #' @importFrom methods setClass setOldClass setGeneric setMethod representation
 #' signature prototype initialize new
 #' @importFrom Runuran pinv.new ur "unuran.packed<-" unuran.details
+#' @import checkmate
 #' @keywords internal
 "_PACKAGE"

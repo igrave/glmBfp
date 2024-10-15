@@ -1,7 +1,7 @@
 #####################################################################################
 ## Author: Daniel Sabanés Bové [daniel *.* sabanesbove *a*t* ifspm *.* uzh *.* ch]
 ## Project: Bayesian fractional polynomials
-##        
+##
 ## Time-stamp: <[testCox.R] by DSB Mit 03/07/2013 22:58 (CEST)>
 ##
 ## Description:
@@ -15,7 +15,7 @@
 #####################################################################################
 
 ##' @include helpers.R
-{}
+NULL
 
 
 ##' Test the Cox model computation for the TBF approach
@@ -38,64 +38,67 @@
 ##' @author Daniel Sabanes Bove
 testCox <- function(survTimes,
                     censInd,
-                    offsets=rep.int(0, length(survTimes)),
+                    offsets = rep.int(0, length(survTimes)),
                     X,
-                    useCppCode=FALSE)
-{
-    ## checks
-    stopifnot(is.numeric(survTimes),
-              is.logical(censInd),
-              is.matrix(X),
-              identical(length(survTimes), length(censInd)),
-              identical(length(survTimes), length(offsets)),
-              identical(length(survTimes), nrow(X)),
-              is.bool(useCppCode))
+                    useCppCode = FALSE) {
+  ## checks
+  stopifnot(
+    is.numeric(survTimes),
+    is.logical(censInd),
+    is.matrix(X),
+    identical(length(survTimes), length(censInd)),
+    identical(length(survTimes), length(offsets)),
+    identical(length(survTimes), nrow(X)),
+    is.bool(useCppCode)
+  )
 
-    ## summaries
-    nObs <- nrow(X)
-    nCovs <- ncol(X)
+  ## summaries
+  nObs <- nrow(X)
+  nCovs <- ncol(X)
 
-    ## check that we have at least one covariate
-    ## (null model is not treated here)
-    stopifnot(nCovs > 0)
+  ## check that we have at least one covariate
+  ## (null model is not treated here)
+  stopifnot(nCovs > 0)
 
-    ## method for handling ties:
-    method <- "efron"
-    
-    ## now do either simple R or go C++
-    if(useCppCode)
-    {
-        ## sort according to survival times
-        sorted <- order(survTimes)
-        survTimes <- survTimes[sorted]
-        censInd <- censInd[sorted]
-        X <- X[sorted, ]
+  ## method for handling ties:
+  method <- "efron"
 
-        ## go C++ for fitting the Cox model
-        storage.mode(X) <- "double"
-        tmp <- cpp_coxfit(as.double(survTimes),
-                          as.integer(censInd),
-                          as.double(offsets),
-                          X,
-                          ifelse(method == "efron", 1L, 0L))
+  ## now do either simple R or go C++
+  if (useCppCode) {
+    ## sort according to survival times
+    sorted <- order(survTimes)
+    survTimes <- survTimes[sorted]
+    censInd <- censInd[sorted]
+    X <- X[sorted, ]
 
-        ## get results
-        deviance <- -2 * (tmp$loglik[1] - tmp$loglik[2])
-        covMat <- tmp$imat
-        betas <- tmp$coef
-        
-    } else {
-        ## fit the Cox model
-        tmp <- survival::coxph(Surv(survTimes, censInd) ~ X + offset(offsets), ties=method)
+    ## go C++ for fitting the Cox model
+    storage.mode(X) <- "double"
+    tmp <- cpp_coxfit(
+      as.double(survTimes),
+      as.integer(censInd),
+      as.double(offsets),
+      X,
+      ifelse(method == "efron", 1L, 0L)
+    )
 
-        ## get results
-        deviance <- -2 * (tmp$loglik[1] - tmp$loglik[2])
-        covMat <- tmp$var
-        betas <- tmp$coefficients
-    }
+    ## get results
+    deviance <- -2 * (tmp$loglik[1] - tmp$loglik[2])
+    covMat <- tmp$imat
+    betas <- tmp$coef
+  } else {
+    ## fit the Cox model
+    tmp <- survival::coxph(Surv(survTimes, censInd) ~ X + offset(offsets), ties = method)
 
-    ## return the results
-    return(list(betas=betas,
-                cov=covMat,
-                deviance=deviance))
+    ## get results
+    deviance <- -2 * (tmp$loglik[1] - tmp$loglik[2])
+    covMat <- tmp$var
+    betas <- tmp$coefficients
+  }
+
+  ## return the results
+  return(list(
+    betas = betas,
+    cov = covMat,
+    deviance = deviance
+  ))
 }

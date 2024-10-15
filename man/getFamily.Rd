@@ -12,7 +12,7 @@ getFamily(family, phi)
 \item{phi}{the dispersion argument passed to \code{\link{glmBayesMfp}}}
 }
 \value{
-The returned family object also includes a custom \sQuote{init} function, 
+The returned family object also includes a custom \sQuote{init} function,
 which takes the response vector (or matrix) (\sQuote{y}) and the corresponding weight vector
 (\sQuote{weights}), processes them to response vector \sQuote{y} and possibly altered weights
 \sQuote{weights}, and includes starting values \sQuote{mustart} for the IWLS algorithm.

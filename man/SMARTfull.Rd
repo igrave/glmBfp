@@ -23,7 +23,7 @@ events in patients with symptomatic cardiovascular disease.
     \item{\code{SMOKING}}{a factor with levels \code{1} Never \code{2} Former \code{3} Current}
     \item{\code{ALCOHOL}}{a factor with levels \code{1} Never \code{2} Former \code{3} Current}
     \item{\code{BMI}}{a numeric vector (imputed). Body mass index (kg/m^2)}
-    \item{\code{SYSTH}}{a numeric vector (imputed).  Systomlic blood pressure (mm/Hg)}
+    \item{\code{SYSTH}}{a numeric vector (imputed).  Systolic blood pressure (mm/Hg)}
     \item{\code{HDL}}{a numeric vector (imputed). High-density lipoprotein cholesterol (mmol/L)}
     \item{\code{DIABETES}}{a numeric vector (imputed). Ever diabetes (0/1)}
     \item{\code{HISTCAR2}}{a numeric vector. History of cardiac disease score.}
@@ -35,9 +35,10 @@ events in patients with symptomatic cardiovascular disease.
   }
 }
 \details{
-\code{SMARTfull} is a processed extract from the SMART study. The code for processing is available: \url{http://www.clinicalpredictionmodels.org/doku.php?id=rcode_and_data:chapter23}. This dataset is named \code{SMARTc} in that code, and is used to fit the "full" model, which is discussed in Chapter 23 of Steyerberg's \emph{Clinical Prediction Models}.}
+\code{SMARTfull} is a processed extract from the SMART study, which
+is discussed in Chapter 23 of Steyerberg's \emph{Clinical Prediction Models}.}
 
-\source{\url{http://www.clinicalpredictionmodels.org}}
+\source{\url{https://www.clinicalpredictionmodels.org/}}
 \references{Steyerberg, E.W. (2009) \emph{Clinical Prediction Models}. New York: Springer-Verlag }
 \examples{
 data(SMARTfull)

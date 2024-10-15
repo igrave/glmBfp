@@ -32,7 +32,7 @@ A list with the following elements:
 \item{par}{the minimum abscissa found by the algorithm}
 \item{inv.hessian}{the inverse Hessian at \code{par}}
 \item{evaluations}{list of the function evaluation pairs: \code{args} and
-\code{vals}} 
+\code{vals}}
 \item{code}{the convergence code. 0 is \dQuote{OK}, -1 is \dQuote{lost
 precision}, and +1 is \dQuote{change not large enough}}
 }

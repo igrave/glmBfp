@@ -18,7 +18,7 @@ coxTBF(
 )
 }
 \arguments{
-\item{formula}{model formula with Surv object as LHS and \code{\link{uc}} or \code{\link{bfp}} 
+\item{formula}{model formula with Surv object as LHS and \code{\link{uc}} or \code{\link{bfp}}
 variables as RHS.}
 
 \item{data}{data.frame for model variables}
@@ -34,19 +34,21 @@ coefficients. "shrunk" refits baseline with shrunken coefficients (default).}
 
 \item{sep}{estimate baseline hazard for each estimate of model coefficients (default=FALSE).}
 
-\item{keepModelList}{keep the model list returned by glmBayesMfp for MAP and MPM models (default=FALSE).}
+\item{keepModelList}{keep the model list returned by glmBayesMfp for MAP and MPM models
+(default=FALSE).}
 
 \item{...}{additional arguments to pass to \code{\link{glmBayesMfp}}}
 
-\item{overrideConfig}{replaces the the MAP model with the given configuration, which is passed to \code{\link{computeModels}}}
+\item{overrideConfig}{replaces the the MAP model with the given configuration, which is passed
+to \code{\link{computeModels}}}
 }
 \value{
 An object of S3 class \code{TBFcox} or \code{TBFcox.sep} if sep=TRUE.
 }
 \description{
-A simplified formula based interface to \code{\link{glmBayesMfp}} to fit Cox models. Can return 
-Maximum a posteriori (MAP) model, Median probability model (MPM) or Bayesian model average (BMA).
-Provides global empirical Bayes and AIC/BIC based model inference.
+A simplified formula based interface to \code{\link{glmBayesMfp}} to fit Cox models. Can return
+Maximum a posteriori (MAP) model, Median probability model (MPM) or Bayesian model average
+(BMA). Provides global empirical Bayes and AIC/BIC based model inference.
 }
 \keyword{models}
 \keyword{regression}

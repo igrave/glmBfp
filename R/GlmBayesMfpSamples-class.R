@@ -1,7 +1,7 @@
 #####################################################################################
 ## Author: Daniel Sabanés Bové [daniel *.* sabanesbove *a*t* gmx *.* net]
 ## Project: Bayesian FPs for GLMs
-##        
+##
 ## Time-stamp: <[GlmBayesMfpSamples-class.R] by DSB Mon 26/08/2013 17:30 (CEST)>
 ##
 ## Description:
@@ -20,7 +20,7 @@
 ##' @note Note that for a model average, \code{nSamples} will typically *not*
 ##' be the number of samples available for each bfp curve, e.g.
 ##'
-##' \describe{ 
+##' \describe{
 ##' \item{fitted}{fit samples on the linear predictor scale (\code{nObs} x
 ##' \code{nSamples})}
 ##' \item{predictions}{samples from the predictive distribution for new data
@@ -40,16 +40,17 @@
 ##'
 ##' @name GlmBayesMfpSamples-class
 ##' @keywords classes internal
-setClass(Class="GlmBayesMfpSamples",
-         representation=
-         representation(fitted="matrix",
-                        predictions="matrix",
-                        fixCoefs="list",
-                        z="numeric",
-                        bfpCurves="list",
-                        ucCoefs="list",
-                        shiftScaleMax="matrix",
-                        nSamples="integer"))
- 
-
-
+setClass(
+  Class = "GlmBayesMfpSamples",
+  representation =
+    representation(
+      fitted = "matrix",
+      predictions = "matrix",
+      fixCoefs = "list",
+      z = "numeric",
+      bfpCurves = "list",
+      ucCoefs = "list",
+      shiftScaleMax = "matrix",
+      nSamples = "integer"
+    )
+)

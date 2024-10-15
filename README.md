@@ -2,7 +2,7 @@
 # glmBfp
 
 <!-- badges: start -->
-[![R-CMD-check](https://github.com/igrave/glmBfp-dev/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/igrave/glmBfp-dev/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/igrave/glmBfp/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/igrave/glmBfp/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 Bayesian GLMs with model selection and shrinkage.
@@ -15,5 +15,3 @@ You can install the development version of glmBfp from [GitHub](https://github.c
 # install.packages("pak")
 pak::pak("igrave/glmBfp")
 ```
-
-

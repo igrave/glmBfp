@@ -1,7 +1,7 @@
 #####################################################################################
 ## Author: Daniel Sabanes Bove [daniel *.* sabanesbove *a*t* ifspm *.* uzh *.* ch]
 ## Project: Bayesian FPs for GLMs
-## 
+##
 ## Time-stamp: <[posteriors.R] by DSB Die 25/05/2010 15:11 (CEST)>
 ##
 ## Description:
@@ -21,24 +21,23 @@
 ##'
 ##' @export
 ##' @keywords utilities
-posteriors <- function (GlmBayesMfpObject,
-                        type = c("normalized", "sampling"))
-                        
-{
-    ## match the type argument
-    type <- match.arg(type)
+posteriors <- function(GlmBayesMfpObject,
+                       type = c("normalized", "sampling")) {
+  ## match the type argument
+  type <- match.arg(type)
 
-    ## index is translated from type
-    ind <- switch(type,
-                  normalized=1L,
-                  sampling=2L)
+  ## index is translated from type
+  ind <- switch(type,
+    normalized = 1L,
+    sampling = 2L
+  )
 
-    ## check ... 
-    ## ... does the first model have the probability estimate?
-    stopifnot(! is.na(GlmBayesMfpObject[[1]]$information$posterior[ind]))
-    
-    ## now extract the requested probs from all models
-    sapply (GlmBayesMfpObject, function (one) one$information$posterior [ind])
+  ## check ...
+  ## ... does the first model have the probability estimate?
+  stopifnot(!is.na(GlmBayesMfpObject[[1]]$information$posterior[ind]))
+
+  ## now extract the requested probs from all models
+  sapply(GlmBayesMfpObject, function(one) one$information$posterior[ind])
 }
 
 ## ****************************************************************************************************
@@ -50,10 +49,11 @@ posteriors <- function (GlmBayesMfpObject,
 ##'
 ##' @export
 ##' @keywords utilities
-logMargLiks <- function(GlmBayesMfpObject)
-{
-    sapply(GlmBayesMfpObject,
-           function(one) one$information$logMargLik)
+logMargLiks <- function(GlmBayesMfpObject) {
+  sapply(
+    GlmBayesMfpObject,
+    function(one) one$information$logMargLik
+  )
 }
 
 ## ****************************************************************************************************
@@ -65,12 +65,9 @@ logMargLiks <- function(GlmBayesMfpObject)
 ##'
 ##' @export
 ##' @keywords utilities
-logPriors <- function(GlmBayesMfpObject)
-{
-    sapply(GlmBayesMfpObject,
-           function(one) one$information$logPrior)
+logPriors <- function(GlmBayesMfpObject) {
+  sapply(
+    GlmBayesMfpObject,
+    function(one) one$information$logPrior
+  )
 }
-
-
-
-

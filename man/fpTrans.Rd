@@ -15,7 +15,7 @@ fpTrans(var, powers = 1, scale = 1, shift = 0, center = TRUE)
 
 \item{shift}{value to shift the variable by (default=0)}
 
-\item{center}{center the variable when tranforming.}
+\item{center}{center the variable when transforming.}
 }
 \value{
 the transformed vector

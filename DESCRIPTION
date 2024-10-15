@@ -1,3 +1,4 @@
+Type: Package
 Package: glmBfp
 Imports:
     survival,
@@ -67,7 +68,7 @@ Collate:
     'plotCurveEstimate.R'
     'predictCoxTBF.R'
     'testCox.R'
-    'uncenteredDesignMatrix.R'
     'writeFormula.R'
 RoxygenNote: 7.3.2
+Language: en-US
 Config/testthat/edition: 3

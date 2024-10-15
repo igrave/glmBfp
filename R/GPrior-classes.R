@@ -1,7 +1,7 @@
 #####################################################################################
 ## Author: Daniel Sabanés Bové [daniel *.* sabanesbove *a*t* ifspm *.* uzh *.* ch]
 ## Project: BFPs for GLMs.
-##        
+##
 ## Time-stamp: <[GPrior-classes.R] by DSB Mon 26/08/2013 11:34 (CEST)>
 ##
 ## Description:
@@ -26,41 +26,44 @@
 ##' }
 ##'
 ##' @seealso \code{\linkS4class{HypergPrior}}, \code{\linkS4class{InvGammaGPrior}},
-##' \code{\linkS4class{IncInvGammaGPrior}}, \code{\linkS4class{CustomGPrior}} 
-##' 
+##' \code{\linkS4class{IncInvGammaGPrior}}, \code{\linkS4class{CustomGPrior}}
+##'
 ##' @name GPrior-class
 ##' @keywords classes internal
-setClass(Class="GPrior",
-         representation=
-         representation(logDens="function"),
-         contains=list("VIRTUAL"),
-         validity=
-         function(object){
-             ## check that the exp of the log density function
-             ## is a valid density function 
+setClass(
+  Class = "GPrior",
+  representation =
+    representation(logDens = "function"),
+  contains = list("VIRTUAL"),
+  validity =
+    function(object) {
+      ## check that the exp of the log density function
+      ## is a valid density function
 
-             XMIN <- .Machine$double.xmin
-             EPS <- sqrt(.Machine$double.eps)
-        
-             integrand <- function(g) exp(object@logDens(g))
-             integral <- integrate(f=integrand,
-                                   lower=XMIN,
-                                   upper=Inf)
-        
-             if(integral$message != "OK")
-             {
-                 return(integral$message)
-             }
-             else 
-             {
-                 if(abs(integral$value - 1) > EPS)
-                 {
-                     warning("density must be proper and normalized: (numerical) integral is ",
-                             integral$value)
-                 }
+      XMIN <- .Machine$double.xmin
+      EPS <- sqrt(.Machine$double.eps)
 
-                 return(TRUE)
-             }})
+      integrand <- function(g) exp(object@logDens(g))
+      integral <- integrate(
+        f = integrand,
+        lower = XMIN,
+        upper = Inf
+      )
+
+      if (integral$message != "OK") {
+        return(integral$message)
+      } else {
+        if (abs(integral$value - 1) > EPS) {
+          warning(
+            "density must be proper and normalized: (numerical) integral is ",
+            integral$value
+          )
+        }
+
+        return(TRUE)
+      }
+    }
+)
 
 ## ----------------------------------------------------------------------------
 
@@ -76,20 +79,20 @@ setClass(Class="GPrior",
 ##' @name HypergPrior-class
 ##' @keywords classes
 ##' @export
-setClass(Class="HypergPrior",
-         representation=
-         representation(a="numeric"),
-         contains=list("GPrior"),
-         validity=           
-         function(object){
-             if(object@a <= 3)
-             {
-                 return("the parameter a must be larger than 3 for proper posteriors")
-             }
-             else
-             {
-                 return(TRUE)
-             }})
+setClass(
+  Class = "HypergPrior",
+  representation =
+    representation(a = "numeric"),
+  contains = list("GPrior"),
+  validity =
+    function(object) {
+      if (object@a <= 3) {
+        return("the parameter a must be larger than 3 for proper posteriors")
+      } else {
+        return(TRUE)
+      }
+    }
+)
 
 
 ##' Initialization method for the "HypergPrior" class
@@ -102,36 +105,36 @@ setClass(Class="HypergPrior",
 ##'
 ##' @name HypergPrior-initialize
 ##' @aliases HypergPrior-initialize initialize,HypergPrior-method
-##' 
+##'
 ##' @keywords methods internal
 ##' @author Daniel Sabanes Bove \email{daniel.sabanesbove@@ifspm.uzh.ch}
-##' 
+##'
 ##' @importFrom methods callNextMethod
-##' 
-setMethod("initialize",
-    signature(.Object = "HypergPrior"),
-    function (.Object, a, ...) 
-    {
-       .Object@logDens <- function(g)
-       {
-           return(log(a - 2) - log(2) - a/2 * log1p(g))
-       }
-       callNextMethod(.Object, a=a, ...)
-    })
+##'
+setMethod(
+  "initialize",
+  signature(.Object = "HypergPrior"),
+  function(.Object, a, ...) {
+    .Object@logDens <- function(g) {
+      return(log(a - 2) - log(2) - a / 2 * log1p(g))
+    }
+    callNextMethod(.Object, a = a, ...)
+  }
+)
 
 
 ##' Constructor for the hyper-g prior class
 ##'
 ##' @param a the hyperparameter which must be larger than 3, and should not be larger than 4
-##' in order not to favour too much shrinkage a priori (default: 4)
+##' in order not to favor too much shrinkage a priori (default: 4)
 ##' @return a new \code{\linkS4class{HypergPrior}} object
 ##'
 ##' @keywords classes
 ##' @export
-HypergPrior <- function(a=4)
-{
-    return(new("HypergPrior",
-               a=a))
+HypergPrior <- function(a = 4) {
+  return(new("HypergPrior",
+    a = a
+  ))
 }
 
 
@@ -146,25 +149,27 @@ HypergPrior <- function(a=4)
 ##' }
 ##'
 ##' @seealso the constructor \code{\link{InvGammaGPrior}}
-##' 
+##'
 ##' @name InvGammaGPrior-class
 ##' @keywords classes
 ##' @export
-setClass(Class="InvGammaGPrior",
-         representation=
-         representation(a="numeric",
-                        b="numeric"),
-         contains=list("GPrior"),
-         validity=           
-         function(object){
-             if((object@a <= 0) || (object@b <= 0))
-             {
-                 return("the parameters a and b must be positive")
-             }
-             else
-             {
-                 return(TRUE)
-             }})
+setClass(
+  Class = "InvGammaGPrior",
+  representation =
+    representation(
+      a = "numeric",
+      b = "numeric"
+    ),
+  contains = list("GPrior"),
+  validity =
+    function(object) {
+      if ((object@a <= 0) || (object@b <= 0)) {
+        return("the parameters a and b must be positive")
+      } else {
+        return(TRUE)
+      }
+    }
+)
 
 ##' Initialization method for the "InvGammaGPrior" class
 ##'
@@ -177,19 +182,19 @@ setClass(Class="InvGammaGPrior",
 ##'
 ##' @name InvGammaGPrior-initialize
 ##' @aliases InvGammaGPrior-initialize initialize,InvGammaGPrior-method
-##' 
+##'
 ##' @keywords methods internal
 ##' @author Daniel Sabanes Bove \email{daniel.sabanesbove@@ifspm.uzh.ch}
-setMethod("initialize",
-    signature(.Object = "InvGammaGPrior"),
-    function (.Object, a, b, ...) 
-    {
-       .Object@logDens <- function(g)
-       {
-           return(-(a + 1) * log(g) - b/g + a * log(b) - lgamma(a))
-       }
-       callNextMethod(.Object, a=a, b=b, ...)
-    })
+setMethod(
+  "initialize",
+  signature(.Object = "InvGammaGPrior"),
+  function(.Object, a, b, ...) {
+    .Object@logDens <- function(g) {
+      return(-(a + 1) * log(g) - b / g + a * log(b) - lgamma(a))
+    }
+    callNextMethod(.Object, a = a, b = b, ...)
+  }
+)
 
 ##' Constructor for the inverse gamma g-prior class
 ##'
@@ -199,11 +204,11 @@ setMethod("initialize",
 ##'
 ##' @keywords classes
 ##' @export
-InvGammaGPrior <- function(a=0.001, b=0.001)
-{
-    return(new("InvGammaGPrior",
-               a=a,
-               b=b))
+InvGammaGPrior <- function(a = 0.001, b = 0.001) {
+  return(new("InvGammaGPrior",
+    a = a,
+    b = b
+  ))
 }
 
 
@@ -218,29 +223,29 @@ InvGammaGPrior <- function(a=0.001, b=0.001)
 ##' }
 ##'
 ##' @seealso the constructor \code{\link{IncInvGammaGPrior}}
-##' 
+##'
 ##' @name IncInvGammaGPrior-class
 ##' @keywords classes
 ##' @export
-setClass(Class="IncInvGammaGPrior",
-         representation=
-         representation(a="numeric",
-                        b="numeric"),
-         contains=list("GPrior"),
-         validity=           
-         function(object){
-             if(object@a <= 0)
-             {
-                 return("the parameter a must be positive")
-             }
-             else if(object@b < 0)
-             {
-                 return("the parameter b must be non-negative")
-             }
-             else
-             {
-                 return(TRUE)
-             }})
+setClass(
+  Class = "IncInvGammaGPrior",
+  representation =
+    representation(
+      a = "numeric",
+      b = "numeric"
+    ),
+  contains = list("GPrior"),
+  validity =
+    function(object) {
+      if (object@a <= 0) {
+        return("the parameter a must be positive")
+      } else if (object@b < 0) {
+        return("the parameter b must be non-negative")
+      } else {
+        return(TRUE)
+      }
+    }
+)
 
 ##' Initialization method for the "IncInvGammaGPrior" class
 ##'
@@ -253,27 +258,26 @@ setClass(Class="IncInvGammaGPrior",
 ##'
 ##' @name IncInvGammaGPrior-initialize
 ##' @aliases IncInvGammaGPrior-initialize initialize,IncInvGammaGPrior-method
-##' 
+##'
 ##' @keywords methods internal
 ##' @author Daniel Sabanes Bove \email{daniel.sabanesbove@@ifspm.uzh.ch}
-setMethod("initialize",
-    signature(.Object = "IncInvGammaGPrior"),
-    function (.Object, a, b, ...) 
-    {
-       .Object@logDens <- function(g)
-       {
-           normConst <-
-               if(b > 0)
-               {
-                   a * log(b) - pgamma(b, a, log.p=TRUE) - lgamma(a)
-               } else {
-                   log(a)
-               }
-           
-           return(- (a + 1) * log1p(g) - b / (g + 1) + normConst)
-       }
-       callNextMethod(.Object, a=a, b=b, ...)
-    })
+setMethod(
+  "initialize",
+  signature(.Object = "IncInvGammaGPrior"),
+  function(.Object, a, b, ...) {
+    .Object@logDens <- function(g) {
+      normConst <-
+        if (b > 0) {
+          a * log(b) - pgamma(b, a, log.p = TRUE) - lgamma(a)
+        } else {
+          log(a)
+        }
+
+      return(-(a + 1) * log1p(g) - b / (g + 1) + normConst)
+    }
+    callNextMethod(.Object, a = a, b = b, ...)
+  }
+)
 
 ##' Constructor for the incomplete inverse gamma g-prior class
 ##'
@@ -283,11 +287,11 @@ setMethod("initialize",
 ##'
 ##' @keywords classes
 ##' @export
-IncInvGammaGPrior <- function(a=0.001, b=0.001)
-{
-    return(new("IncInvGammaGPrior",
-               a=a,
-               b=b))
+IncInvGammaGPrior <- function(a = 0.001, b = 0.001) {
+  return(new("IncInvGammaGPrior",
+    a = a,
+    b = b
+  ))
 }
 
 
@@ -295,15 +299,17 @@ IncInvGammaGPrior <- function(a=0.001, b=0.001)
 
 ##' The custom g-prior class
 ##'
-##' This class wraps around a custom log prior density for the covariance factor g. 
+##' This class wraps around a custom log prior density for the covariance factor g.
 ##'
 ##' @seealso the constructor \code{\link{CustomGPrior}}
-##' 
+##'
 ##' @name CustomGPrior-class
 ##' @keywords classes
 ##' @export
-setClass(Class="CustomGPrior",
-         contains=list("GPrior"))
+setClass(
+  Class = "CustomGPrior",
+  contains = list("GPrior")
+)
 
 
 ##' Constructor for the custom g-prior class
@@ -313,10 +319,10 @@ setClass(Class="CustomGPrior",
 ##'
 ##' @keywords classes
 ##' @export
-CustomGPrior <- function(logDens)
-{
-    return(new("CustomGPrior",
-               logDens=logDens))
+CustomGPrior <- function(logDens) {
+  return(new("CustomGPrior",
+    logDens = logDens
+  ))
 }
 
 ## ----------------------------------------------------------------------------

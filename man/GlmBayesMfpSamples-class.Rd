@@ -11,7 +11,7 @@ Class for samples from a single GlmBayesMfp model or a model average
 Note that for a model average, \code{nSamples} will typically *not*
 be the number of samples available for each bfp curve, e.g.
 
-\describe{ 
+\describe{
 \item{fitted}{fit samples on the linear predictor scale (\code{nObs} x
 \code{nSamples})}
 \item{predictions}{samples from the predictive distribution for new data
