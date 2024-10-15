@@ -21,7 +21,7 @@ library(glmBfp)
 
 The `glmBfp` package implements a new approach to model fitting and variable selection which are described in two articles, @held2015approximate and @held2016objective.
 This vignette shows how to use the simplified interface for fitting Cox models with `glmBfp`.
-We use the SMART data described in \citet{Steyerberg2009} and available at [http://www.clinicalpredictionmodels.org/]. The package includes a processed copy of this data with the missing values imputed and variables transformed as in the example code on that site
+We use the SMART data described in \citet{Steyerberg2009} and available at [https://www.clinicalpredictionmodels.org/]. The package includes a processed copy of this data with the missing values imputed and variables transformed as in the example code on that site
 
 ```{r}
 data(SMARTfull)
