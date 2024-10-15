@@ -7,7 +7,7 @@ test_that("evalZdensity works", {
     prior <- InvGammaGPrior(a = 1 / 2, b = pima.nObs / 2),
     "normalized"
   )
-  
+
   set.seed(102)
   object <- glmBayesMfp(
     type ~ bfp(npreg) + bfp(glu) + bfp(bp) +
@@ -23,16 +23,16 @@ test_that("evalZdensity works", {
   )
 
   z <- object[[1]]$information$negLogUnnormZDensities$args
-  
+
   result <- evalZdensity(
     config = object[[1]]$configuration,
     object = object,
-    zValues =  z,
+    zValues = z,
     conditional = FALSE,
     debug = FALSE,
     higherOrderCorrection = TRUE
   )
-  
+
   expect_equal(
     result,
     object[[1]]$information$negLogUnnormZDensities$vals
