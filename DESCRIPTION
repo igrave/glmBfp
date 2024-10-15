@@ -68,7 +68,6 @@ Collate:
     'plotCurveEstimate.R'
     'predictCoxTBF.R'
     'testCox.R'
-    'uncenteredDesignMatrix.R'
     'writeFormula.R'
 RoxygenNote: 7.3.2
 Language: en-US

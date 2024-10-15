@@ -96,6 +96,7 @@ evalZdensity <-
       attrs$data,
       attrs$fpInfos,
       attrs$ucInfos,
+      attrs$fixInfos,
       attrs$distribution,
       options
     )
