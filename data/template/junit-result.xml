@@ -1,39 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="coxTBF" timestamp="2024-10-11T20:46:14Z" hostname="6848ab8c4a70" tests="7" skipped="0" failures="0" errors="0" time="6.435">
-    <testcase time="1.533" classname="coxTBF" name="coxTBF_works_with_uc_terms"/>
-    <testcase time="1.337" classname="coxTBF" name="coxTBF_works_with_bfp_terms"/>
-    <testcase time="0.605" classname="coxTBF" name="coxTBF_works_with_globalEB"/>
-    <testcase time="0.243" classname="coxTBF" name="coxTBF_works_with_BIC"/>
-    <testcase time="0.915" classname="coxTBF" name="coxTBF_works_with_type_BMA"/>
-    <testcase time="0.912" classname="coxTBF" name="coxTBF_works_with_type_MPM"/>
-    <testcase time="0.89" classname="coxTBF" name="coxTBF_works_with_type_MAP"/>
+  <testsuite name="coxTBF" timestamp="2024-10-15T19:52:33Z" hostname="5ed3407fb517" tests="7" skipped="0" failures="0" errors="0" time="6.275">
+    <testcase time="1.538" classname="coxTBF" name="coxTBF_works_with_uc_terms"/>
+    <testcase time="1.28" classname="coxTBF" name="coxTBF_works_with_bfp_terms"/>
+    <testcase time="0.579" classname="coxTBF" name="coxTBF_works_with_globalEB"/>
+    <testcase time="0.24" classname="coxTBF" name="coxTBF_works_with_BIC"/>
+    <testcase time="1.05" classname="coxTBF" name="coxTBF_works_with_type_BMA"/>
+    <testcase time="0.867" classname="coxTBF" name="coxTBF_works_with_type_MPM"/>
+    <testcase time="0.721" classname="coxTBF" name="coxTBF_works_with_type_MAP"/>
   </testsuite>
-  <testsuite name="glmBayesMfp" timestamp="2024-10-11T20:46:21Z" hostname="6848ab8c4a70" tests="8" skipped="0" failures="0" errors="0" time="1.087">
-    <testcase time="0.0289999999999999" classname="glmBayesMfp" name="glmBayesMfp_works_with_bfp"/>
-    <testcase time="0.515" classname="glmBayesMfp" name="glmBayesMfp_works_with_bfp"/>
-    <testcase time="0.00300000000000011" classname="glmBayesMfp" name="glmBayesMfp_works_with_bfp"/>
+  <testsuite name="evalZdensity" timestamp="2024-10-15T19:52:40Z" hostname="5ed3407fb517" tests="2" skipped="0" failures="0" errors="0" time="0.558">
+    <testcase time="0.0280000000000005" classname="evalZdensity" name="evalZdensity_works"/>
+    <testcase time="0.529999999999999" classname="evalZdensity" name="evalZdensity_works"/>
+  </testsuite>
+  <testsuite name="glmBayesMfp" timestamp="2024-10-15T19:52:40Z" hostname="5ed3407fb517" tests="8" skipped="0" failures="0" errors="0" time="1.068">
+    <testcase time="0.024" classname="glmBayesMfp" name="glmBayesMfp_works_with_bfp"/>
+    <testcase time="0.511" classname="glmBayesMfp" name="glmBayesMfp_works_with_bfp"/>
+    <testcase time="0.00200000000000067" classname="glmBayesMfp" name="glmBayesMfp_works_with_bfp"/>
     <testcase time="0.00399999999999956" classname="glmBayesMfp" name="glmBayesMfp_works_with_bfp"/>
-    <testcase time="0.0129999999999999" classname="glmBayesMfp" name="glmBayesMfp_works_with_marginal_likelihood"/>
-    <testcase time="0.515000000000001" classname="glmBayesMfp" name="glmBayesMfp_works_with_marginal_likelihood"/>
+    <testcase time="0.00900000000000034" classname="glmBayesMfp" name="glmBayesMfp_works_with_marginal_likelihood"/>
+    <testcase time="0.510999999999999" classname="glmBayesMfp" name="glmBayesMfp_works_with_marginal_likelihood"/>
     <testcase time="0.00300000000000011" classname="glmBayesMfp" name="glmBayesMfp_works_with_marginal_likelihood"/>
-    <testcase time="0.00500000000000078" classname="glmBayesMfp" name="glmBayesMfp_works_with_marginal_likelihood"/>
+    <testcase time="0.00399999999999956" classname="glmBayesMfp" name="glmBayesMfp_works_with_marginal_likelihood"/>
   </testsuite>
-  <testsuite name="optimization" timestamp="2024-10-11T20:46:22Z" hostname="6848ab8c4a70" tests="4" skipped="0" failures="0" errors="0" time="0.057">
-    <testcase time="0.0469999999999988" classname="optimization" name="optimization_routines_work_correctly"/>
+  <testsuite name="optimization" timestamp="2024-10-15T19:52:41Z" hostname="5ed3407fb517" tests="4" skipped="0" failures="0" errors="0" time="0.045">
+    <testcase time="0.0360000000000014" classname="optimization" name="optimization_routines_work_correctly"/>
     <testcase time="0.00300000000000011" classname="optimization" name="optimization_routines_work_correctly"/>
-    <testcase time="0.00400000000000134" classname="optimization" name="optimization_routines_work_correctly"/>
+    <testcase time="0.00300000000000011" classname="optimization" name="optimization_routines_work_correctly"/>
     <testcase time="0.00299999999999834" classname="optimization" name="optimization_routines_work_correctly"/>
   </testsuite>
-  <testsuite name="predictCoxTBF" timestamp="2024-10-11T20:46:22Z" hostname="6848ab8c4a70" tests="3" skipped="0" failures="0" errors="0" time="1.134">
-    <testcase time="0.74" classname="predictCoxTBF" name="coxTBF_works_with_uc_terms"/>
-    <testcase time="0.367000000000001" classname="predictCoxTBF" name="predict_works_with_coxTBF_with_sep_TRUE"/>
-    <testcase time="0.0269999999999992" classname="predictCoxTBF" name="predict.TBFcox.BMA_works"/>
+  <testsuite name="predictCoxTBF" timestamp="2024-10-15T19:52:41Z" hostname="5ed3407fb517" tests="3" skipped="0" failures="0" errors="0" time="1.122">
+    <testcase time="0.732000000000001" classname="predictCoxTBF" name="coxTBF_works_with_uc_terms"/>
+    <testcase time="0.363" classname="predictCoxTBF" name="predict_works_with_coxTBF_with_sep_TRUE"/>
+    <testcase time="0.027000000000001" classname="predictCoxTBF" name="predict.TBFcox.BMA_works"/>
   </testsuite>
-  <testsuite name="sampleGlm" timestamp="2024-10-11T20:46:23Z" hostname="6848ab8c4a70" tests="4" skipped="0" failures="0" errors="0" time="0.733">
-    <testcase time="0.0120000000000005" classname="sampleGlm" name="sampleGlm_works_with_default_arguments"/>
-    <testcase time="0.715" classname="sampleGlm" name="sampleGlm_works_with_default_arguments"/>
-    <testcase time="0.00300000000000011" classname="sampleGlm" name="sampleGlm_works_with_default_arguments"/>
+  <testsuite name="sampleGlm" timestamp="2024-10-15T19:52:42Z" hostname="5ed3407fb517" tests="4" skipped="0" failures="0" errors="0" time="0.719">
+    <testcase time="0.0129999999999999" classname="sampleGlm" name="sampleGlm_works_with_default_arguments"/>
+    <testcase time="0.699" classname="sampleGlm" name="sampleGlm_works_with_default_arguments"/>
+    <testcase time="0.00399999999999956" classname="sampleGlm" name="sampleGlm_works_with_default_arguments"/>
     <testcase time="0.00300000000000011" classname="sampleGlm" name="sampleGlm_works_with_default_arguments"/>
   </testsuite>
 </testsuites>
