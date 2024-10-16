@@ -25,7 +25,7 @@ Description: Implements the Bayesian paradigm
     models, described by Held, Sabanes Bove, Gravestock(2015) <doi:10.1214/14-STS510>
     and Cox models described by Held, Gravestock, Sabanes Bove (2016) <doi:10.1002/sim.7090>.
     See package 'bfp' for the treatment of normal models.
-Version: 0.0-61
+Version: 0.0.61
 Depends: R (>= 4.0.0)
 Encoding: UTF-8
 Suggests:
